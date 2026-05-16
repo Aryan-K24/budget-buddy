@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir -p android-output
           cd android-output
-          bubblewrap init \
+          echo "n" | bubblewrap init \
             --manifest https://financialtracker-budgetbuddyfinal.netlify.app/manifest.json \
             --directory .
         env:
@@ -41,7 +41,7 @@ jobs:
       - name: Build APK
         run: |
           cd android-output
-          bubblewrap build
+          echo "n" | bubblewrap build
         env:
           BUBBLEWRAP_SKIP_UPDATE_CHECK: true
 
