@@ -1,7 +1,7 @@
 name: Build Android APK
 
 on:
-  workflow_dispatch:  # Manual trigger — you click "Run workflow" on GitHub
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,10 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Install PWABuilder CLI
-        run: npm install -g @pwabuilder/cli
+          node-version: '20'
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -28,15 +25,29 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Android package
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli
+
+      - name: Initialize Bubblewrap project
         run: |
-          pwabuilder build android \
-            --url https://financialtracker-budgetbuddyfinal.netlify.app \
-            --output ./android-output
+          mkdir -p android-output
+          cd android-output
+          bubblewrap init \
+            --manifest https://financialtracker-budgetbuddyfinal.netlify.app/manifest.json \
+            --directory .
+        env:
+          BUBBLEWRAP_SKIP_UPDATE_CHECK: true
+
+      - name: Build APK
+        run: |
+          cd android-output
+          bubblewrap build
+        env:
+          BUBBLEWRAP_SKIP_UPDATE_CHECK: true
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: budget-buddy-android
-          path: ./android-output/**/*.apk
+          path: android-output/app/build/outputs/apk/**/*.apk
           retention-days: 30
