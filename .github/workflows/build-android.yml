@@ -20,6 +20,9 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install Android Build Tools
+        run: sdkmanager "build-tools;29.0.3"
+
       - name: Install Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
