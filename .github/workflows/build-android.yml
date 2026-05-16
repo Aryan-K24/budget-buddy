@@ -20,77 +20,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
-
-      - name: Create Bubblewrap config
-        run: |
-          mkdir -p android-output
-          cat > android-output/twa-manifest.json << 'EOF'
-          {
-            "packageId": "app.budgetbuddy.finance",
-            "host": "financialtracker-budgetbuddyfinal.netlify.app",
-            "name": "Budget Buddy",
-            "launcherName": "Budget Buddy",
-            "display": "standalone",
-            "themeColor": "#7c3aed",
-            "navigationColor": "#7c3aed",
-            "navigationColorDark": "#7c3aed",
-            "navigationDividerColor": "#7c3aed",
-            "navigationDividerColorDark": "#7c3aed",
-            "backgroundColor": "#f0f4ff",
-            "enableNotifications": true,
-            "startUrl": "/index.html",
-            "iconUrl": "https://financialtracker-budgetbuddyfinal.netlify.app/icon-512x512.png",
-            "maskableIconUrl": "https://financialtracker-budgetbuddyfinal.netlify.app/icon-512x512-maskable.png",
-            "monochromeIconUrl": "https://financialtracker-budgetbuddyfinal.netlify.app/icon-192x192.png",
-            "shortcuts": [],
-            "generatorApp": "bubblewrap-cli",
-            "webManifestUrl": "https://financialtracker-budgetbuddyfinal.netlify.app/manifest.json",
-            "isChromeOSOnly": false,
-            "isMetaQuest": false,
-            "fullScopeUrl": "https://financialtracker-budgetbuddyfinal.netlify.app/",
-            "minSdkVersion": 19,
-            "orientation": "portrait",
-            "fingerprints": [],
-            "signing": {
-              "keystore": "android.keystore",
-              "keyAlias": "android"
-            },
-            "signingMode": "none",
-            "alphaDependencies": {
-              "enabled": false
-            },
-            "enableSiteSettingsShortcut": true,
-            "isTrustedWebActivity": true,
-            "splashScreenFadeOutDuration": 300,
-            "fallbackType": "customtabs",
-            "features": {},
-            "appVersionCode": 1,
-            "appVersion": "1.0.0"
-          }
-          EOF
-
-      - name: Generate Android project
-        run: |
-          cd android-output
-          bubblewrap generate --manifest ./twa-manifest.json
-        env:
-          BUBBLEWRAP_SKIP_UPDATE_CHECK: "true"
-          BUBBLEWRAP_JDK_PATH: "/opt/hostedtoolcache/Java_Temurin_jdk/17.0.14-7/x64"
-          ANDROID_HOME: "/usr/local/lib/android/sdk"
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.1.1'
 
       - name: Build APK
         run: |
-          cd android-output
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
-        env:
-          ANDROID_HOME: "/usr/local/lib/android/sdk"
+          cd twa-project
+          gradle assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: budget-buddy-android
-          path: android-output/app/build/outputs/apk/**/*.apk
+          path: twa-project/app/build/outputs/apk/**/*.apk
           retention-days: 30
