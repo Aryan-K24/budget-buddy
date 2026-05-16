@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions | Budget Buddy</title>
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    body {
+      background: linear-gradient(155deg, #f0e0ff 0%, #dac8ff 32%, #c0ccff 62%, #d8eeff 100%) fixed;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: #1e1b4b;
+      margin: 0;
+      padding: 2rem 1rem 4rem;
+      min-height: 100vh;
+    }
+    .policy-wrap { max-width: 720px; margin: 0 auto; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.875rem; font-weight: 600; color: #7c3aed;
+      text-decoration: none; margin-bottom: 1.5rem;
+      padding: 6px 14px; background: rgba(124, 58, 237, 0.08);
+      border-radius: 100px; border: 1px solid rgba(124, 58, 237, 0.2);
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(124, 58, 237, 0.14); }
+    .policy-header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
+      border-radius: 20px; padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.5rem; position: relative; overflow: hidden;
+    }
+    .policy-header::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; background: rgba(255,255,255,0.06); border-radius: 50%;
+    }
+    .policy-header-icon {
+      width: 48px; height: 48px; background: rgba(255,255,255,0.12);
+      border-radius: 14px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; margin-bottom: 1rem;
+    }
+    .policy-header h1 {
+      font-family: 'Sora', sans-serif; font-size: 1.6rem;
+      font-weight: 700; color: #ffffff; margin: 0 0 0.4rem;
+    }
+    .policy-meta { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+    .summary-banner {
+      background: rgba(59, 48, 163, 0.06); border: 1px solid rgba(59, 48, 163, 0.18);
+      border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+      font-size: 0.9rem; color: #312e81; line-height: 1.6;
+    }
+    .summary-banner strong { color: #3730a3; }
+    .policy-card {
+      background: rgba(255, 255, 255, 0.92); border-radius: 16px;
+      border: 1px solid rgba(124, 58, 237, 0.1); padding: 1.5rem;
+      margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
+    }
+    .policy-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.875rem; }
+    .policy-card-num {
+      width: 28px; height: 28px; background: rgba(55, 48, 163, 0.1);
+      color: #3730a3; border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .policy-card h2 { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1e1b4b; margin: 0; }
+    .policy-card p { font-size: 0.875rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem; }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { padding-left: 1.1rem; margin: 0; }
+    .policy-card ul li { font-size: 0.875rem; color: #475569; line-height: 1.7; margin-bottom: 4px; }
+    .important-box {
+      background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px;
+      padding: 0.875rem 1rem; font-size: 0.85rem; color: #78350f;
+      margin-top: 0.75rem; line-height: 1.6;
+    }
+    .contact-card {
+      background: #1e1b4b; border-radius: 16px; padding: 1.5rem;
+      margin-top: 1.5rem; text-align: center;
+    }
+    .contact-card h2 { font-family: 'Sora', sans-serif; color: #fff; font-size: 1rem; margin: 0 0 0.5rem; }
+    .contact-card p { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin: 0 0 1rem; }
+    .contact-card a {
+      display: inline-block; background: #7c3aed; color: #fff;
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.875rem; font-weight: 600; text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      body { padding: 1rem 0.75rem 3rem; }
+      .policy-header { padding: 1.5rem; border-radius: 16px; }
+      .policy-header h1 { font-size: 1.3rem; }
+      .policy-card { padding: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="policy-wrap">
+
+  <a href="#" class="back-btn" id="backBtn">← Back</a>
+
+  <div class="policy-header">
+    <div class="policy-header-icon">📄</div>
+    <h1>Terms &amp; Conditions</h1>
+    <div class="policy-meta">Last updated: May 2026 &nbsp;·&nbsp; Budget Buddy</div>
+  </div>
+
+  <div class="summary-banner">
+    <strong>The short version:</strong> Budget Buddy is a personal finance tool, not financial advice. Use it responsibly, keep your account secure, and don't misuse it. By registering, you agreed to these terms.
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">1</div><h2>Acceptance of Terms</h2></div>
+    <p>By creating an account and using Budget Buddy, you confirm that you have read, understood, and agree to be bound by these Terms &amp; Conditions. If you do not agree, please do not use the app.</p>
+    <p>These terms apply to all users of Budget Buddy, including the web app and any associated services.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">2</div><h2>App Purpose &amp; Permitted Use</h2></div>
+    <p>Budget Buddy is designed solely for <strong>personal finance tracking and budgeting</strong>. You may use the app to:</p>
+    <ul>
+      <li>Track your income, expenses, and savings</li>
+      <li>Set budget goals and payment reminders</li>
+      <li>Review your financial history</li>
+    </ul>
+    <p style="margin-top:0.75rem;">You may not use Budget Buddy for any commercial, illegal, or fraudulent purpose.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">3</div><h2>Not Financial Advice</h2></div>
+    <p>Budget Buddy is a <strong>personal tracking tool only</strong>. Nothing in the app constitutes financial, investment, tax, or legal advice.</p>
+    <div class="important-box">⚠️ Always consult a qualified financial professional before making significant financial decisions. The developers of Budget Buddy are not liable for any financial outcomes resulting from your use of the app.</div>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">4</div><h2>Account Responsibility</h2></div>
+    <p>You are solely responsible for:</p>
+    <ul>
+      <li>Maintaining the confidentiality of your login credentials</li>
+      <li>All activity that occurs under your account</li>
+      <li>The accuracy of the financial information you enter</li>
+      <li>Notifying us immediately if you suspect unauthorised account access</li>
+    </ul>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">5</div><h2>Notifications</h2></div>
+    <p>Budget Buddy may send you push notifications for payment reminders and budget alerts, but only if you explicitly enable them in Settings. You can disable notifications at any time via your device settings or within the app.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">6</div><h2>Service Availability</h2></div>
+    <p>We strive to keep Budget Buddy available and functional at all times. However, we do not guarantee uninterrupted access. The service may occasionally be unavailable due to maintenance, updates, or circumstances beyond our control.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">7</div><h2>Limitation of Liability</h2></div>
+    <p>Budget Buddy is provided <strong>"as is"</strong> without warranties of any kind, either express or implied.</p>
+    <div class="important-box">⚠️ To the fullest extent permitted by law, the Budget Buddy developers shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of — or inability to use — the app, including any financial losses or decisions made based on data within the app.</div>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">8</div><h2>Changes to These Terms</h2></div>
+    <p>We reserve the right to update these Terms &amp; Conditions at any time. When we make significant changes, we will notify you within the app before those changes take effect. Continued use of Budget Buddy after the effective date of any changes constitutes your acceptance.</p>
+  </div>
+
+  <div class="contact-card">
+    <h2>Questions about these terms?</h2>
+    <p>Get in touch with the Budget Buddy team and we'll be happy to clarify.</p>
+    <a href="mailto:support.budgetbuddyapp@gmail.com">Contact Us</a>
+  </div>
+
+</div>
+
+<script>
+  // Use ?from=register (set by register.html links) instead of document.referrer
+  // because referrer is stripped in PWAs and some mobile browsers
+  const btn = document.getElementById("backBtn");
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("from") === "register") {
+    btn.textContent = "← Back to Register";
+    btn.href = "register.html";
+  } else {
+    btn.textContent = "← Back to Settings";
+    btn.href = "settings.html";
+  }
+</script>
+
+</body>
+</html>

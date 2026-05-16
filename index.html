@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Budget Buddy" />
+<meta name="theme-color" content="#7c3aed" />
+<link rel="apple-touch-icon" href="icon-180x180.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Buddy — Your Personal Finance Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple:      #7c3aed;
+  --purple-dark: #5b21b6;
+  --blue:        #3b82f6;
+  --green:       #10b981;
+  --bg:          #f0f4ff;
+  --text:        #1e1b4b;
+  --text-muted:  #6b7280;
+  --card-bg:     rgba(255,255,255,0.92);
+  --border:      rgba(124,58,237,0.12);
+  --shadow-sm:   0 4px 16px rgba(124,58,237,0.07);
+  --shadow-md:   0 12px 40px rgba(124,58,237,0.13);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(240,244,255,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  gap: 2rem;
+}
+/* FIX 1: push logo to far left, links centered, cta to far right */
+.nav-logo {
+  font-family:'Sora',sans-serif; font-weight:700; font-size:1.25rem;
+  color:var(--purple); letter-spacing:-0.5px;
+  margin-right: auto;
+}
+.nav-logo span { color:var(--blue); }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a { text-decoration:none; color:var(--text-muted); font-size:0.9rem; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover { color:var(--purple); }
+.nav-cta {
+  background:var(--purple); color:white; padding:0.5rem 1.4rem;
+  border-radius:100px; text-decoration:none; font-size:0.9rem; font-weight:600;
+  transition:background 0.2s, transform 0.15s;
+  box-shadow:0 4px 14px rgba(124,58,237,0.28);
+  margin-left: auto;
+  white-space: nowrap;
+}
+.nav-cta:hover { background:var(--purple-dark); transform:translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:8rem 1.5rem 4rem;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+  width:900px; height:900px;
+  background:radial-gradient(circle, rgba(124,58,237,0.11) 0%, rgba(59,130,246,0.06) 50%, transparent 70%);
+  pointer-events:none;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.2);
+  color:var(--purple); font-size:0.78rem; font-weight:600;
+  padding:0.35rem 1rem; border-radius:100px; margin-bottom:1.5rem;
+  animation:fadeUp 0.6s ease both;
+}
+.hero-badge::before { content:'✦'; font-size:0.65rem; }
+
+h1 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(2.4rem,6vw,4rem);
+  font-weight:800; line-height:1.12; letter-spacing:-2px;
+  max-width:720px; margin-bottom:1.25rem;
+  animation:fadeUp 0.6s 0.1s ease both;
+}
+h1 em {
+  font-style:normal;
+  background:linear-gradient(135deg, var(--purple), var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero-sub {
+  font-size:1.05rem; color:var(--text-muted); line-height:1.75;
+  max-width:500px; margin-bottom:2.5rem;
+  animation:fadeUp 0.6s 0.2s ease both;
+}
+.hero-btns {
+  display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+  animation:fadeUp 0.6s 0.3s ease both;
+}
+.btn-primary {
+  background:var(--purple); color:white; padding:0.8rem 2rem;
+  border-radius:100px; text-decoration:none; font-weight:600; font-size:1rem;
+  transition:all 0.2s; box-shadow:0 4px 20px rgba(124,58,237,0.3);
+}
+.btn-primary:hover { background:var(--purple-dark); transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,0.4); }
+.btn-secondary {
+  background:white; color:var(--purple); padding:0.8rem 2rem;
+  border-radius:100px; text-decoration:none; font-weight:600; font-size:1rem;
+  border:1.5px solid rgba(124,58,237,0.25); transition:all 0.2s;
+}
+.btn-secondary:hover { border-color:var(--purple); transform:translateY(-2px); }
+
+/* ── PREVIEW FRAME ── */
+.preview-wrap { margin-top:4rem; width:100%; max-width:960px; animation:fadeUp 0.7s 0.4s ease both; }
+.preview-frame {
+  background:white; border-radius:20px;
+  box-shadow:0 20px 80px rgba(124,58,237,0.15), 0 4px 20px rgba(0,0,0,0.06);
+  overflow:hidden; border:1px solid var(--border);
+}
+.frame-bar {
+  background:#f8f7ff; padding:0.7rem 1rem;
+  display:flex; align-items:center; gap:6px;
+  border-bottom:1px solid var(--border);
+}
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
+.frame-url {
+  margin-left:10px; font-size:0.75rem; color:var(--text-muted);
+  background:rgba(124,58,237,0.06); padding:3px 12px; border-radius:100px;
+}
+
+/* ── MOCK DASHBOARD ── */
+.mock-db { padding:1.25rem; background:linear-gradient(160deg,#f0f4ff 0%,#faf9ff 100%); }
+
+/* FIX 2: nav logo and links with proper spacing */
+.mock-nav {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  margin-bottom:0.75rem;
+  gap: 1.5rem;
+}
+.mock-logo {
+  font-family:'Sora',sans-serif; font-weight:700;
+  color:var(--purple); font-size:0.9rem;
+  white-space: nowrap;
+  margin-right: auto;
+}
+.mock-links { display:flex; gap:0.9rem; flex-shrink: 0; }
+.mock-link { font-size:0.6rem; color:var(--text-muted); white-space: nowrap; }
+
+/* FIX 3: 2-col cards + full-width top category row below */
+.mock-cards-top { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; margin-bottom:0.55rem; }
+.mock-cards-bottom { margin-bottom:0.55rem; }
+
+.mc { background:white; border-radius:10px; padding:0.8rem; border:1px solid var(--border); }
+.mc-lbl { font-size:0.58rem; color:var(--text-muted); margin-bottom:0.3rem; }
+.mc-val { font-family:'Sora',sans-serif; font-size:1.1rem; font-weight:700; }
+.mc-sub { font-size:0.55rem; color:var(--text-muted); margin-top:0.2rem; }
+.mc-prog { height:4px; background:#fef3c7; border-radius:100px; margin-top:5px; overflow:hidden; }
+.mc-prog-fill { height:100%; width:62%; background:#f59e0b; border-radius:100px; }
+
+/* Top category full-width card */
+.mc-top-cat {
+  background:white; border-radius:10px; padding:0.65rem 0.8rem;
+  border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.mc-top-cat-left { display:flex; flex-direction:column; gap:2px; }
+.mc-top-cat-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(16,185,129,0.1); color:#059669;
+  font-size:0.58rem; font-weight:600; padding:2px 8px;
+  border-radius:100px; width:fit-content;
+}
+.mc-top-cat-name {
+  font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700;
+  color:var(--text);
+}
+.mc-top-cat-right {
+  display:flex; flex-direction:column; align-items:flex-end; gap:2px;
+}
+.mc-top-cat-amount { font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700; color:#10b981; }
+.mc-top-cat-pct { font-size:0.55rem; color:var(--text-muted); }
+
+.mock-mid { display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; margin-bottom:0.55rem; }
+.mb { background:white; border-radius:10px; padding:0.8rem; border:1px solid var(--border); }
+.mb-title { font-size:0.68rem; font-weight:600; color:var(--text); margin-bottom:0.45rem; }
+.mb-tip { font-size:0.58rem; color:var(--text-muted); line-height:1.5; }
+.mb-tip b { color:var(--text); }
+.prow { display:flex; align-items:center; justify-content:space-between; padding:0.28rem 0; border-bottom:1px solid #f3f4f6; }
+.prow:last-child { border-bottom:none; }
+.prow-name { font-size:0.62rem; color:var(--text); }
+.prow-badge { font-size:0.52rem; background:#fee2e2; color:#ef4444; padding:2px 6px; border-radius:100px; font-weight:600; }
+.prow-safe  { font-size:0.52rem; color:#9ca3af; }
+
+.mock-chart { background:white; border-radius:10px; padding:0.85rem; border:1px solid var(--border); }
+.mock-chart-inner { display:flex; align-items:center; justify-content:center; gap:1.5rem; }
+.mock-legend { display:flex; flex-direction:column; gap:6px; }
+.ml-item { display:flex; align-items:center; gap:6px; font-size:0.6rem; color:#4b5563; }
+.ml-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+.ml-name { min-width:70px; }
+.ml-val { font-weight:600; color:var(--text); }
+
+/* ── FEATURES ── */
+.section { padding:5rem 1.5rem; max-width:1040px; margin:0 auto; }
+.section-label { font-size:0.78rem; font-weight:600; color:var(--purple); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:0.75rem; }
+.section-title { font-family:'Sora',sans-serif; font-size:clamp(1.8rem,4vw,2.5rem); font-weight:700; letter-spacing:-0.5px; line-height:1.2; margin-bottom:1rem; }
+.section-sub { color:var(--text-muted); font-size:1rem; line-height:1.7; max-width:540px; }
+
+.features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; margin-top:3rem; }
+.feature-card {
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:16px; padding:1.5rem;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.feature-icon {
+  width:44px; height:44px; border-radius:12px;
+  background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(59,130,246,0.1));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem; margin-bottom:1rem;
+}
+.feature-title { font-family:'Sora',sans-serif; font-weight:600; font-size:1rem; margin-bottom:0.5rem; }
+.feature-desc { font-size:0.88rem; color:var(--text-muted); line-height:1.6; }
+
+/* ── STATS ── */
+.stats-section {
+  background:linear-gradient(135deg,var(--purple) 0%,var(--blue) 100%);
+  padding:4rem 1.5rem; text-align:center;
+}
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:2rem; max-width:780px; margin:0 auto; }
+.stat-num { font-family:'Sora',sans-serif; font-size:2.4rem; font-weight:700; color:white; }
+.stat-label { font-size:0.85rem; color:rgba(255,255,255,0.75); margin-top:0.25rem; }
+
+/* ── CTA ── */
+.cta-section { padding:6rem 1.5rem; text-align:center; position:relative; overflow:hidden; }
+.cta-section::before {
+  content:''; position:absolute; bottom:-200px; left:50%; transform:translateX(-50%);
+  width:600px; height:600px;
+  background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-section h2 { font-family:'Sora',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; letter-spacing:-0.5px; margin-bottom:1rem; }
+.cta-section p { color:var(--text-muted); margin-bottom:2rem; font-size:1rem; }
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid var(--border);
+  padding:1.5rem 2.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:0.82rem; color:var(--text-muted);
+}
+.footer-logo { font-family:'Sora',sans-serif; font-weight:700; color:var(--purple); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 640px) {
+  nav { padding:1rem 1.25rem; gap:1rem; }
+  .nav-links { display:none; }
+  .mock-links { display:none; }
+  .mock-cards-top { grid-template-columns:1fr 1fr; }
+  .mock-mid { grid-template-columns:1fr; }
+  footer { flex-direction:column; gap:0.5rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Budget<span>Buddy</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a href="register.html" class="nav-cta">Get started free</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge">Free for everyone · No credit card needed</div>
+  <h1>Your money,<br><em>finally under control</em></h1>
+  <p class="hero-sub">Budget Buddy helps you track expenses, plan savings, manage upcoming payments, and get notified before you overspend — all in one clean dashboard built for real life.</p>
+  <div class="hero-btns">
+    <a href="register.html" class="btn-primary">Start tracking for free</a>
+    <a href="login.html" class="btn-secondary">Sign in</a>
+  </div>
+
+  <div class="preview-wrap">
+    <div class="preview-frame">
+      <div class="frame-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="frame-url">budget buddy/dashboard</div>
+      </div>
+      <div class="mock-db">
+
+        <div class="mock-nav">
+          <div class="mock-logo">Budget Buddy</div>
+          <div class="mock-links">
+            <span class="mock-link">Dashboard</span>
+            <span class="mock-link">Expenses</span>
+            <span class="mock-link">History</span>
+            <span class="mock-link">Payments</span>
+            <span class="mock-link">Savings Planner</span>
+            <span class="mock-link">Extra Funds</span>
+          </div>
+        </div>
+
+        <div style="font-size:0.65rem;color:#6b7280;font-weight:500;margin-bottom:0.6rem;">Welcome back, Aryan! 👋</div>
+
+        <!-- 2-col top cards -->
+        <div class="mock-cards-top">
+          <div class="mc">
+            <div class="mc-lbl">Remaining Budget</div>
+            <div class="mc-val" style="color:#10b981;">₹8,240</div>
+            <div class="mc-sub">Savings Goal: ₹5,000/mo</div>
+          </div>
+          <div class="mc">
+            <div class="mc-lbl">This Month Spent</div>
+            <div class="mc-val" style="color:#f59e0b;">₹12,450</div>
+            <div class="mc-sub">Budget: ₹20,690 · 62% used</div>
+            <div class="mc-prog"><div class="mc-prog-fill"></div></div>
+          </div>
+        </div>
+
+        <!-- Top category as a slim full-width bar -->
+        <div class="mock-cards-bottom">
+          <div class="mc-top-cat">
+            <div class="mc-top-cat-left">
+              <div class="mc-top-cat-badge">🏆 Top Category</div>
+              <div class="mc-top-cat-name">Food &amp; Dining</div>
+            </div>
+            <div class="mc-top-cat-right">
+              <div class="mc-top-cat-amount">₹4,200</div>
+              <div class="mc-top-cat-pct">34% of total spend</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mid grid -->
+        <div class="mock-mid">
+          <div class="mb">
+            <div class="mb-title">Monthly Summary</div>
+            <div class="mb-tip">💡 Highest spending on <b>Food &amp; Dining</b>. Try meal prepping to cut costs significantly this month.</div>
+          </div>
+          <div class="mb">
+            <div class="mb-title">Upcoming Payments</div>
+            <div class="prow">
+              <span class="prow-name">Netflix</span>
+              <span class="prow-badge">₹649 · Due today</span>
+            </div>
+            <div class="prow">
+              <span class="prow-name">SIP — Mutual Fund</span>
+              <span class="prow-safe">₹2,000 · 5 days</span>
+            </div>
+            <div class="prow">
+              <span class="prow-name">Rent</span>
+              <span class="prow-safe">₹8,000 · 12 days</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="mock-chart">
+          <div class="mb-title" style="margin-bottom:0.7rem;">Spending Breakdown</div>
+          <div class="mock-chart-inner">
+            <canvas id="mockPie" width="110" height="110" style="flex-shrink:0;"></canvas>
+            <div class="mock-legend">
+              <div class="ml-item"><span class="ml-dot" style="background:#10b981;"></span><span class="ml-name">Food &amp; Dining</span><span class="ml-val">₹4,200 (34%)</span></div>
+              <div class="ml-item"><span class="ml-dot" style="background:#7c3aed;"></span><span class="ml-name">Transport</span><span class="ml-val">₹2,800 (22%)</span></div>
+              <div class="ml-item"><span class="ml-dot" style="background:#3b82f6;"></span><span class="ml-name">Shopping</span><span class="ml-val">₹2,450 (20%)</span></div>
+              <div class="ml-item"><span class="ml-dot" style="background:#f59e0b;"></span><span class="ml-name">Investments (SIP)</span><span class="ml-val">₹2,000 (16%)</span></div>
+              <div class="ml-item"><span class="ml-dot" style="background:#ef4444;"></span><span class="ml-name">Other</span><span class="ml-val">₹1,000 (8%)</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything you need to stay on top of your money — nothing you don't.</h2>
+    <p class="section-sub">Built for real people tracking real budgets. No spreadsheets, no complexity.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Smart Dashboard</div>
+      <div class="feature-desc">See your remaining budget, monthly spend, top spending category, and upcoming payments the moment you log in. Everything at a glance.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💸</div>
+      <div class="feature-title">Expense Tracking</div>
+      <div class="feature-desc">Log expenses by category with notes. Edit or delete anytime. Add custom categories for anything that doesn't fit the defaults.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🕐</div>
+      <div class="feature-title">Expense History</div>
+      <div class="feature-desc">Filter all past expenses by category or month. Full monthly summaries show budget used, remaining balance, top category, and total savings.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">Payment Reminders</div>
+      <div class="feature-desc">Track SIPs, subscriptions, and bills. Push notifications alert you before they're due. Monthly payments auto-roll to the next cycle.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Savings Planner</div>
+      <div class="feature-desc">Set a goal, enter your salary and savings amount — Budget Buddy tells you exactly how many months it takes and shows a full timeline milestone by milestone.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">➕</div>
+      <div class="feature-title">Extra Funds</div>
+      <div class="feature-desc">Got pocket money, a freelance payment, or a friend paid you back? Log extra income separately so your budget stays accurate without touching your salary.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title">Monthly Carry Forward</div>
+      <div class="feature-desc">Any unspent balance at month end automatically carries forward to the next month. Your leftover money never disappears.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🌍</div>
+      <div class="feature-title">Multi-Currency Support</div>
+      <div class="feature-desc">Track finances in INR, USD, EUR, GBP, JPY, MYR, LKR and more. Switch currency anytime from settings — every number across the app updates instantly.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🏷️</div>
+      <div class="feature-title">Custom Categories</div>
+      <div class="feature-desc">Add your own spending categories beyond the defaults. Rename or remove them anytime. Past expenses stay untouched when a category is removed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="reveal">
+      <div class="stat-num">9</div>
+      <div class="stat-label">Powerful features</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">₹0</div>
+      <div class="stat-label">Cost to get started</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Currencies supported</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Months of history</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="about">
+  <div class="reveal">
+    <h2>Start tracking your money today</h2>
+    <p>Free to use. Takes 30 seconds to sign up. No credit card, no catch.</p>
+    <a href="register.html" class="btn-primary" style="font-size:1.05rem;padding:0.9rem 2.5rem;">Create your free account</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">BudgetBuddy</div>
+  <div>Built with ♥ · Free for everyone</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  new Chart(document.getElementById('mockPie'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Food & Dining','Transport','Shopping','Investments (SIP)','Other'],
+      datasets: [{
+        data: [4200, 2800, 2450, 2000, 1000],
+        backgroundColor: ['#10b981','#7c3aed','#3b82f6','#f59e0b','#ef4444'],
+        borderWidth: 2,
+        borderColor: '#ffffff',
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: false,
+      cutout: '62%',
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      animation: { animateRotate: true, duration: 1400 }
+    }
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js")
+        .then(() => console.log("Service Worker registered"))
+        .catch(err => console.log("SW error:", err));
+    });
+  }
+</script>
+
+<script type="module">
+  import { auth } from "./firebase-config.js";
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  onAuthStateChanged(auth, (user) => {
+    if (user) window.location.href = "dashboard.html";
+  });
+</script>
+
+</body>
+</html>

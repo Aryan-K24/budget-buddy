@@ -1,0 +1,503 @@
+/* ============================================================
+   SETTINGS.CSS — Budget Buddy
+   Loaded after common.css only (dashboard.css is NOT needed here).
+   common.css owns: reset, CSS vars, navbar layout, hamburger
+   show/hide, .dashboard container, shared inputs/buttons, .hidden,
+   .toast.
+   This file adds only settings-page-specific styles.
+============================================================ */
+
+/* ========================
+   PAGE WRAPPER
+======================== */
+.settings-page {
+  width: 100%;
+}
+
+.settings-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ========================
+   FINANCIAL HERO CARD
+======================== */
+.finance-card {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  border-radius: 20px;
+  padding: 1.75rem;
+  position: relative;
+  /* overflow intentionally NOT hidden so the dropdown can escape */
+}
+
+/* Decorative background blobs */
+.finance-card-glow,
+.finance-card-glow2 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.finance-card-glow {
+  top: -50px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.finance-card-glow2 {
+  bottom: -40px;
+  left: 20px;
+  width: 130px;
+  height: 130px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Everything inside the card sits above the glows */
+.finance-label,
+.finance-values,
+.finance-form {
+  position: relative;
+  z-index: 1;
+}
+
+.finance-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Current-value grid ── */
+.finance-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.finance-value-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.finance-value-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 4px;
+}
+
+.finance-value-amount {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Smaller variant for name / currency symbol */
+.finance-value-amount--sm {
+  font-size: 1rem;
+}
+
+/* ── Edit form ── */
+.finance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.finance-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.finance-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.finance-input-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+/* Inputs inside the purple card — override common.css white defaults */
+.finance-input {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 0.7rem 0.9rem !important;
+  font-size: 16px !important;       /* 16 px prevents iOS zoom */
+  color: #ffffff !important;
+  width: 100% !important;
+  transition: border-color 0.2s, background 0.2s !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  /* Reset button-specific defaults */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  cursor: text;
+}
+
+.finance-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.finance-input:focus {
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: none !important;
+}
+
+.finance-input:-webkit-autofill,
+.finance-input:-webkit-autofill:hover,
+.finance-input:-webkit-autofill:focus,
+.finance-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(100, 50, 180, 0.6) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* The trigger button specifically needs pointer cursor */
+.custom-select-trigger {
+  cursor: pointer !important;
+  text-align: left !important;
+  user-select: none;
+}
+
+/* Save button */
+.finance-save-btn {
+  background: #ffffff !important;
+  color: #7c3aed !important;
+  border: none !important;
+  border-radius: 100px !important;
+  padding: 0.75rem 2rem !important;
+  font-family: 'Sora', sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  align-self: flex-start !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+}
+
+.finance-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.finance-save-btn:disabled {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+}
+
+/* ========================
+   CUSTOM CURRENCY DROPDOWN
+======================== */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  /* z-index context so the open list floats above sibling inputs */
+  z-index: 10;
+}
+
+/*
+ * The options list.
+ * display:none !important — guarantees no cascade from common.css or
+ * dashboard.css can accidentally make it visible.
+ */
+.custom-select-options {
+  display: none !important;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #3b0764;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 260px;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* When JS adds .open, override the !important hide */
+.custom-select-options.open {
+  display: block !important;
+}
+
+.custom-select-options li {
+  padding: 0.75rem 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.custom-select-options li:last-child {
+  border-bottom: none;
+}
+
+.custom-select-options li:hover,
+.custom-select-options li:focus,
+.custom-select-options li[aria-selected="true"] {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  outline: none;
+}
+
+/* ========================
+   CATEGORIES CARD
+======================== */
+.categories-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.categories-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 12px;
+}
+
+.categories-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.categories-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.categories-badge {
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--purple);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Category rows ── */
+.category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #faf9ff;
+  border: 1px solid rgba(124, 58, 237, 0.08);
+  margin-bottom: 6px;
+}
+
+.category-row:last-child {
+  margin-bottom: 0;
+}
+
+.category-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;      /* allow text truncation inside flex */
+  flex: 1;
+}
+
+.category-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(124, 58, 237, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.category-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Inline edit input inside a category row */
+.category-edit-input {
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(124, 58, 237, 0.3) !important;
+  font-size: 16px !important;
+  width: 130px !important;
+  outline: none !important;
+  display: none;
+}
+
+/* ── Category action buttons ── */
+.edit-cat-btn {
+  background: rgba(124, 58, 237, 0.08) !important;
+  color: var(--purple) !important;
+  border: 1px solid rgba(124, 58, 237, 0.2) !important;
+  padding: 5px 14px !important;
+  border-radius: 100px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s !important;
+}
+.edit-cat-btn:hover { background: rgba(124, 58, 237, 0.14) !important; }
+
+.save-cat-btn {
+  background: #dcfce7 !important;
+  color: #16a34a !important;
+  border: 1px solid #bbf7d0 !important;
+  padding: 5px 14px !important;
+  border-radius: 100px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s !important;
+}
+.save-cat-btn:hover { background: #bbf7d0 !important; }
+
+.remove-btn {
+  background: #fff0f0 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+  padding: 5px 14px !important;
+  border-radius: 100px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background 0.2s !important;
+}
+.remove-btn:hover { background: #fee2e2 !important; }
+
+/* Empty state */
+.empty-categories {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1.25rem 0;
+}
+
+/* ========================
+   MOBILE  ≤ 768px
+======================== */
+@media (max-width: 768px) {
+
+  .finance-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .finance-values {
+    gap: 8px;
+    margin-bottom: 1.1rem;
+  }
+
+  .finance-value-box {
+    padding: 0.75rem;
+  }
+
+  .finance-value-amount {
+    font-size: 1.2rem;
+  }
+
+  .finance-value-amount--sm {
+    font-size: 0.95rem;
+  }
+
+  .finance-inputs {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .finance-save-btn {
+    width: 100% !important;
+    align-self: stretch !important;
+    text-align: center !important;
+  }
+
+  .categories-card {
+    padding: 1.25rem;
+  }
+
+  .category-edit-input {
+    font-size: 16px !important;   /* prevent iOS zoom */
+  }
+
+  /*
+   * On mobile the dropdown opens as a fixed bottom-sheet so it is
+   * never clipped by overflow on parent containers.
+   */
+   .custom-select-options {
+    position: absolute !important;
+    top: calc(100% + 6px) !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    border-radius: 10px !important;
+    z-index: 1000 !important;
+    max-height: 220px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .custom-select-options li {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9rem;
+  }
+  .custom-select-wrapper {
+   z-index: 100 !important;
+  }
+
+.finance-form {
+    z-index: auto !important;
+    overflow: visible !important;
+  }
+
+.finance-card {
+    overflow: visible !important;
+  }
+
+} /* ← this closes @media */

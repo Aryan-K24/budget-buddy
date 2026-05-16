@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Budget Buddy</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <nav class="navbar">
+    <div class="logo">
+      Budget Buddy
+      <p class="tagline">Your Personal Finance Overview</p>
+    </div>
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+    <ul class="nav-links" id="mainNav">
+      <li class="active"><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="expense.html">Expenses</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="payments.html">Payments</a></li>
+      <li><a href="savings_planner.html">Savings Planner</a></li>
+      <li><a href="extra_funds.html">Extra Funds</a></li>
+      <li class="icon-link"><a href="settings.html" title="Settings">⚙️</a></li>
+      <li class="icon-link"><a href="#" id="logoutBtn" title="Logout">⏻</a></li>
+    </ul>
+  </nav>
+
+  <p id="welcomeMsg" style="font-size:0.95rem;color:#6b7280;margin-bottom:1rem;font-weight:500;text-align:center;"></p>
+
+  <!-- Summary Cards -->
+  <section class="cards">
+
+    <div class="card">
+      <h3>Remaining Budget</h3>
+      <p class="amount" id="remainingAmount"></p>
+      <p class="extra-funds"></p>
+      <p class="savings-goal"></p>
+    </div>
+
+    <div class="card">
+      <h3>This Month Spent</h3>
+      <p class="amount expense" id="spentAmount"></p>
+      <p class="budget-amount"></p>
+      <p class="budget-text"></p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Top Category</h3>
+      <p class="amount" id="topCategoryAmount"></p>
+    </div>
+
+  </section>
+
+  <!-- Notification Banner -->
+  <div id="notifBanner" style="display:none;background:#f0f4ff;border:1px solid rgba(124,58,237,0.2);border-radius:14px;padding:1rem 1.25rem;margin-bottom:16px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <p style="font-size:0.875rem;color:#1e1b4b;margin:0;">🔔 Enable notifications for payment reminders &amp; budget alerts</p>
+    <button id="enableNotifBtn" style="background:#7c3aed;color:white;border:none;padding:0.5rem 1.2rem;border-radius:100px;font-size:0.8rem;cursor:pointer;font-weight:600;white-space:nowrap;flex-shrink:0;">Enable</button>
+  </div>
+
+  <!-- Main Sections -->
+  <section class="main">
+
+    <div class="box">
+      <h2>Monthly Summary</h2>
+      <p class="monthly-summary-text"></p>
+    </div>
+
+    <div class="box">
+      <h2>Upcoming Payments</h2>
+      <div id="upcomingPayments"></div>
+    </div>
+
+  </section>
+
+  <!-- Spending Breakdown -->
+  <div class="box" style="margin-top:12px;">
+    <h2>Spending Breakdown</h2>
+    <div class="chart-container">
+      <div class="chart-wrapper">
+        <canvas id="spendingChart"></canvas>
+      </div>
+      <div id="chartLegend"></div>
+    </div>
+  </div>
+
+</div><!-- /.dashboard -->
+
+<!-- ── BOTTOM NAV (mobile only) ── -->
+<nav class="bottom-nav">
+  <button class="bn-btn" id="bn-home" onclick="location.href='dashboard.html'">
+    <span class="bn-icon">🏠</span>
+    <span class="bn-label">Home</span>
+  </button>
+  <button class="bn-btn" id="bn-expenses" onclick="location.href='expense.html'">
+    <span class="bn-icon">💸</span>
+    <span class="bn-label">Expenses</span>
+  </button>
+  <button class="bn-btn" id="bn-history" onclick="location.href='history.html'">
+    <span class="bn-icon">🕐</span>
+    <span class="bn-label">History</span>
+  </button>
+  <button class="bn-btn" id="bn-payments" onclick="location.href='payments.html'">
+    <span class="bn-icon">💳</span>
+    <span class="bn-label">Payments</span>
+  </button>
+  <button class="bn-btn" id="bn-more">
+    <span class="bn-icon">•••</span>
+    <span class="bn-label">More</span>
+  </button>
+</nav>
+
+<!-- ── OVERLAY ── -->
+<div class="bn-overlay" id="bn-overlay"></div>
+
+<!-- ── MORE BOTTOM SHEET ── -->
+<div class="bn-more-sheet" id="bn-more-sheet">
+  <div class="bn-sheet-handle"></div>
+  <div class="bn-sheet-title">More</div>
+
+  <a href="savings_planner.html" class="bn-sheet-item">
+    <div class="bn-sheet-icon">📊</div>
+    Savings Planner
+  </a>
+  <a href="extra_funds.html" class="bn-sheet-item">
+    <div class="bn-sheet-icon">💰</div>
+    Extra Funds
+  </a>
+  <a href="settings.html" class="bn-sheet-item">
+    <div class="bn-sheet-icon">⚙️</div>
+    Settings
+  </a>
+  <button class="bn-sheet-item bn-logout-item" id="bn-logout">
+    <div class="bn-sheet-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 17l5-5-5-5"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+      </svg>
+   </div>
+    Logout
+  </button>
+</div>
+
+<!-- Chart.js must load before the module so window.Chart is available -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script type="module" src="dashboard.js"></script>
+<script type="module" src="bottom-nav.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Budget Buddy</title>
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    body {
+      background: linear-gradient(155deg, #f0e0ff 0%, #dac8ff 32%, #c0ccff 62%, #d8eeff 100%) fixed;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: #1e1b4b;
+      margin: 0;
+      padding: 2rem 1rem 4rem;
+      min-height: 100vh;
+    }
+    .policy-wrap { max-width: 720px; margin: 0 auto; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.875rem; font-weight: 600; color: #7c3aed;
+      text-decoration: none; margin-bottom: 1.5rem;
+      padding: 6px 14px; background: rgba(124, 58, 237, 0.08);
+      border-radius: 100px; border: 1px solid rgba(124, 58, 237, 0.2);
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(124, 58, 237, 0.14); }
+    .policy-header {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      border-radius: 20px; padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.5rem; position: relative; overflow: hidden;
+    }
+    .policy-header::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; background: rgba(255,255,255,0.07); border-radius: 50%;
+    }
+    .policy-header-icon {
+      width: 48px; height: 48px; background: rgba(255,255,255,0.15);
+      border-radius: 14px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; margin-bottom: 1rem;
+    }
+    .policy-header h1 { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 700; color: #ffffff; margin: 0 0 0.4rem; }
+    .policy-meta { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
+    .summary-banner {
+      background: rgba(124, 58, 237, 0.06); border: 1px solid rgba(124, 58, 237, 0.18);
+      border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+      font-size: 0.9rem; color: #4c1d95; line-height: 1.6;
+    }
+    .summary-banner strong { color: #5b21b6; }
+    .policy-card {
+      background: rgba(255, 255, 255, 0.92); border-radius: 16px;
+      border: 1px solid rgba(124, 58, 237, 0.1); padding: 1.5rem;
+      margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
+    }
+    .policy-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.875rem; }
+    .policy-card-num {
+      width: 28px; height: 28px; background: rgba(124, 58, 237, 0.1);
+      color: #7c3aed; border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .policy-card h2 { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1e1b4b; margin: 0; }
+    .policy-card p { font-size: 0.875rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem; }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { padding-left: 1.1rem; margin: 0; }
+    .policy-card ul li { font-size: 0.875rem; color: #475569; line-height: 1.7; margin-bottom: 4px; }
+    .contact-card {
+      background: #1e1b4b; border-radius: 16px; padding: 1.5rem;
+      margin-top: 1.5rem; text-align: center;
+    }
+    .contact-card h2 { font-family: 'Sora', sans-serif; color: #fff; font-size: 1rem; margin: 0 0 0.5rem; }
+    .contact-card p { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin: 0 0 1rem; }
+    .contact-card a {
+      display: inline-block; background: #7c3aed; color: #fff;
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.875rem; font-weight: 600; text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      body { padding: 1rem 0.75rem 3rem; }
+      .policy-header { padding: 1.5rem; border-radius: 16px; }
+      .policy-header h1 { font-size: 1.3rem; }
+      .policy-card { padding: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="policy-wrap">
+
+  <a href="#" class="back-btn" id="backBtn">← Back</a>
+
+  <div class="policy-header">
+    <div class="policy-header-icon">🔒</div>
+    <h1>Privacy Policy</h1>
+    <div class="policy-meta">Last updated: May 2026 &nbsp;·&nbsp; Budget Buddy</div>
+  </div>
+
+  <div class="summary-banner">
+    <strong>The short version:</strong> Budget Buddy stores your financial data securely using Firebase (Google). We never sell your data, never share it with advertisers, and you can delete your account at any time. Read on for the full details.
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">1</div><h2>Information We Collect</h2></div>
+    <p>When you use Budget Buddy, we collect only what is necessary to make the app work for you:</p>
+    <ul>
+      <li>Your name and email address (used for account creation and login)</li>
+      <li>Financial data you enter — salary, expenses, savings targets, and payment reminders</li>
+      <li>Notification preferences you configure</li>
+      <li>Custom categories you create for expense tracking</li>
+    </ul>
+    <p style="margin-top: 0.75rem;">We do <strong>not</strong> collect your location, contacts, photos, or any data beyond what you explicitly enter.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">2</div><h2>How We Use Your Information</h2></div>
+    <ul>
+      <li>To provide and sync your expense tracking and budgeting features across devices</li>
+      <li>To send you payment reminders and notifications (only if you enable them)</li>
+      <li>To restore your data if you reinstall or change devices</li>
+      <li>To improve app performance and fix bugs — we never use your financial data for this</li>
+    </ul>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">3</div><h2>Data Storage &amp; Security</h2></div>
+    <p>Your data is stored securely on <strong>Google Firebase</strong> — a cloud platform used by millions of apps worldwide. Firebase encrypts data in transit (HTTPS/TLS) and at rest.</p>
+    <p>Access to your data is protected by Firebase Authentication. Only you, with your credentials, can access your account. Budget Buddy staff cannot read your financial entries.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">4</div><h2>Third-Party Services</h2></div>
+    <p>Budget Buddy uses the following Google Firebase services:</p>
+    <ul>
+      <li><strong>Firebase Authentication</strong> — secure login and account management</li>
+      <li><strong>Cloud Firestore</strong> — storing your financial data</li>
+      <li><strong>Firebase Cloud Messaging (FCM)</strong> — sending push notifications</li>
+    </ul>
+    <p style="margin-top: 0.75rem;">These services are governed by <a href="https://policies.google.com/privacy" target="_blank" style="color:#7c3aed;font-weight:600;">Google's Privacy Policy</a>. We do not use any advertising or analytics SDKs.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">5</div><h2>Your Rights &amp; Data Deletion</h2></div>
+    <p>You have full control over your data:</p>
+    <ul>
+      <li>You may request a copy of your data at any time</li>
+      <li>You may request deletion of your account and all associated data</li>
+      <li>You may opt out of notifications at any time via Settings</li>
+    </ul>
+    <p style="margin-top:0.75rem;">To exercise these rights, contact us using the details below.</p>
+  </div>
+
+  <div class="policy-card">
+    <div class="policy-card-header"><div class="policy-card-num">6</div><h2>Changes to This Policy</h2></div>
+    <p>If we make significant changes to this Privacy Policy, we will notify you via the app before those changes take effect. Continued use of Budget Buddy after that date constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="contact-card">
+    <h2>Questions about your privacy?</h2>
+    <p>We're happy to help. Reach out to the Budget Buddy team.</p>
+    <a href="mailto:support.budgetbuddyapp@gmail.com">Contact Us</a>
+  </div>
+
+</div>
+
+<script>
+  // Use ?from=register (set by register.html links) instead of document.referrer
+  // because referrer is stripped in PWAs and some mobile browsers
+  const btn = document.getElementById("backBtn");
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("from") === "register") {
+    btn.textContent = "← Back to Register";
+    btn.href = "register.html";
+  } else {
+    btn.textContent = "← Back to Settings";
+    btn.href = "settings.html";
+  }
+</script>
+
+</body>
+</html>

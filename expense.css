@@ -1,0 +1,285 @@
+/* ============================================================
+   EXPENSE.CSS — Budget Buddy
+   Loaded after common.css and dashboard.css.
+   common.css owns .menu-toggle show/hide — do NOT redeclare here.
+============================================================ */
+
+
+
+/* ========================
+   CONTAINER
+======================== */
+.dashboard {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+/* ========================
+   NAVBAR
+======================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+  color: purple;
+}
+
+.tagline {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+
+
+/* ========================
+   PAGE TITLE
+======================== */
+.page-title {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* ========================
+   BOX
+======================== */
+.box {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+/* ========================
+   FORM
+======================== */
+.expense-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  gap: 12px;
+}
+
+.expense-form input,
+.expense-form select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  width: 100%;
+}
+
+.expense-form input:focus,
+.expense-form select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.expense-form button {
+  align-self: flex-start;
+  padding: 10px 18px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.expense-form button:hover {
+  background: #1d4ed8;
+}
+
+/* ========================
+   EXPENSE LIST
+======================== */
+.expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ========================
+   EXPENSE ITEM
+======================== */
+.expense-item {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+/* ========================
+   EXPENSE VIEW (normal state)
+======================== */
+.expense-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.expense-left {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.expense-category {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.expense-date {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.expense-note {
+  font-size: 12px;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.expense-amount {
+  font-weight: 600;
+  color: #ef4444;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.expense-actions button {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+  width: auto !important;
+}
+
+/* ========================
+   EXPENSE EDIT (edit state)
+======================== */
+.expense-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.expense-edit select,
+.expense-edit input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+}
+
+.edit-category {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+/* ========================
+   VISIBILITY
+======================== */
+.hidden {
+  display: none;
+}
+
+
+/* ========================
+   MOBILE  ≤ 768px
+======================== */
+@media (max-width: 768px) {
+
+  .dashboard {
+    padding: 12px;
+    margin: 10px;
+    border-radius: 14px;
+  }
+
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+ 
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  .box {
+    padding: 16px;
+  }
+
+  .form-group {
+    flex-direction: column;
+  }
+
+  .expense-form input,
+  .expense-form select {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .expense-form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .expense-edit select,
+  .expense-edit input {
+    font-size: 16px;
+  }
+
+  #resultContent > div:first-child {
+    grid-template-columns: 1fr !important;
+  }
+}

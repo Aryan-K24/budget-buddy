@@ -1,0 +1,657 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Sans:wght@400;500&display=swap');
+
+/* ========================
+   RESET & ROOT
+======================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --purple:       #7c3aed;
+  --purple-dark:  #5b21b6;
+  --blue:         #3b82f6;
+  --bg:           #f0f4ff;
+  --text:         #1e1b4b;
+  --text-muted:   #6b7280;
+  --card-bg:      rgba(255, 255, 255, 0.92);
+  --border:       rgba(124, 58, 237, 0.12);
+  --shadow-sm:    0 4px 16px rgba(124, 58, 237, 0.07);
+  --shadow-md:    0 10px 30px rgba(124, 58, 237, 0.1);
+  --radius:       14px;
+  --radius-lg:    20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: linear-gradient(155deg, 
+    #f0e0ff 0%, 
+    #dac8ff 32%, 
+    #c0ccff 62%, 
+    #d8eeff 100%) fixed;
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+/* ========================
+   NAVBAR
+======================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(240, 244, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 2px;
+}
+
+/* Nav links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links li {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s;
+}
+
+.nav-links li:hover > a,
+.nav-links li.active > a {
+  color: var(--purple);
+}
+
+.nav-links li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--purple);
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.nav-links li:hover::after,
+.nav-links li.active::after {
+  width: 100%;
+}
+
+.icon-link a {
+  font-size: 1.1rem;
+  padding: 6px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.icon-link a:hover {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+/* ========================
+   HAMBURGER TOGGLE
+   Always hidden on desktop.
+   common.css is the single source of truth — 
+   NO other stylesheet should declare .menu-toggle { display:none }
+======================== */
+.menu-toggle {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--purple);
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  /* Prevent the element from ever being swallowed by flex layout */
+  flex-shrink: 0;
+}
+
+.menu-toggle:hover {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+/* ========================
+   DASHBOARD CONTAINER
+======================== */
+.dashboard {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+/* ========================
+   CARDS
+======================== */
+.card {
+  background: var(--card-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.card h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.amount {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.amount.expense { color: #ef4444; }
+
+/* ========================
+   BOX
+======================== */
+.box {
+  background: var(--card-bg);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.box:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.box h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.box p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ========================
+   INPUTS & SELECTS
+======================== */
+input, select, textarea {
+  width: 100%;
+  font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+input::placeholder { color: #9ca3af; }
+
+/* ========================
+   BUTTONS
+======================== */
+button {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.65rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary,
+.expense-form button,
+.extra-form button,
+.add-btn,
+.save-btn {
+  background: var(--purple);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+.btn-primary:hover,
+.expense-form button:hover,
+.extra-form button:hover,
+.add-btn:hover,
+.save-btn:hover {
+  background: var(--purple-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+}
+
+/* ========================
+   PAGE TITLE
+======================== */
+.page-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+/* ========================
+   UTILITY
+======================== */
+.hidden { display: none !important; }
+
+.empty {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* ========================
+   MOBILE  ≤ 768px
+======================== */
+@media (max-width: 768px) {
+
+  /* --- Navbar --- */
+  .navbar {
+    flex-wrap: wrap;
+    padding: 0.875rem 1rem;
+    gap: 0;
+    /* logo + toggle sit on the same row */
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+    flex: 1;          /* takes all space left of the toggle */
+  }
+
+  /* THE FIX: show the hamburger on mobile */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Nav dropdown: hidden by default, revealed by JS adding .active */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.5rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links li::after {
+    display: none;   /* underline indicator not needed in dropdown */
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  .nav-links a:hover {
+    background: rgba(124, 58, 237, 0.06);
+    color: var(--purple);
+  }
+
+  .icon-link {
+    display: inline-flex;
+  }
+
+  .icon-link a {
+    padding: 0.7rem 0.5rem;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* --- Layout --- */
+  .dashboard {
+    margin: 0.75rem;
+    padding: 1rem;
+    border-radius: var(--radius);
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .card { width: 100%; }
+  .amount { font-size: 1.5rem; }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .box { width: 100%; }
+
+  /* Buttons full-width on mobile (except explicitly sized ones) */
+  .btn-primary, .add-btn, .save-btn { width: 100%; }
+
+  #spendingChart { max-width: 100%; height: auto !important; }
+
+  .form-group { flex-direction: column; }
+
+  .expense-form button,
+  .extra-form button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard { margin: 0.5rem; padding: 0.75rem; }
+  .card  { padding: 1rem; }
+  .box   { padding: 1rem; }
+  .amount { font-size: 1.35rem; }
+}
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #16a34a;        /* default green — overridden inline for error/info */
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 100px;       /* pill shape, matches your design */
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 99999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* ============================================================
+   BOTTOM NAV — Mobile only (≤ 768px)
+   Fixed to bottom, always visible while scrolling.
+   Desktop: hidden entirely.
+============================================================ */
+
+/* ── The bar itself ── */
+.bottom-nav {
+  display: none; /* hidden on desktop */
+}
+
+@media (max-width: 768px) {
+
+  /* Hide the hamburger toggle on mobile — bottom nav replaces it */
+  .menu-toggle {
+    display: none !important;
+  }
+
+  /* Hide top nav links on mobile — bottom nav replaces them */
+  .nav-links {
+    display: none !important;
+  }
+
+  /* Push page content up so it doesn't hide behind the fixed bar */
+  body {
+    padding-bottom: 70px;
+  }
+
+  /* ── Bar ── */
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    box-shadow: 0 -4px 20px rgba(124, 58, 237, 0.08);
+    z-index: 500;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 4px;
+    padding-bottom: env(safe-area-inset-bottom); /* iPhone notch support */
+  }
+
+  /* ── Each tab button ── */
+  .bn-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    flex: 1;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 4px 4px;
+    border-radius: 0;
+    color: #94a3b8;
+    font-size: 10px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  /* Icon size */
+  .bn-icon {
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+
+  /* Label */
+  .bn-label {
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  /* Active state */
+  .bn-btn.bn-active {
+    color: var(--purple);
+  }
+
+  .bn-btn.bn-active .bn-icon {
+    transform: translateY(-1px);
+  }
+
+  /* Active indicator dot */
+  .bn-btn.bn-active::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--purple);
+    border-radius: 50%;
+  }
+
+  /* ── Overlay behind the More sheet ── */
+  .bn-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 600;
+    backdrop-filter: blur(2px);
+  }
+
+  .bn-overlay.open {
+    display: block;
+  }
+
+  /* ── More bottom sheet ── */
+  .bn-more-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 24px 24px 0 0;
+    z-index: 700;
+    padding: 12px 0 calc(80px + env(safe-area-inset-bottom)) 0;
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 0 -8px 40px rgba(124, 58, 237, 0.15);
+  }
+
+  .bn-more-sheet.open {
+    transform: translateY(0);
+  }
+
+  /* Drag handle */
+  .bn-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin: 0 auto 16px;
+  }
+
+  /* "MORE" label */
+  .bn-sheet-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 1.5px;
+    padding: 0 24px 8px;
+    text-transform: uppercase;
+  }
+
+  /* Each row in the sheet */
+  .bn-sheet-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1e293b;
+    text-decoration: none;
+    background: none;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .bn-sheet-item:last-child {
+    border-bottom: none;
+  }
+
+  .bn-sheet-item:active {
+    background: #f8fafc;
+  }
+
+  /* Icon bubble */
+  .bn-sheet-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(124, 58, 237, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Logout special styling */
+  .bn-sheet-item.bn-logout-item {
+    color: #ef4444;
+  }
+
+  .bn-sheet-item.bn-logout-item .bn-sheet-icon {
+    background: rgba(239, 68, 68, 0.08);
+  }
+
+} /* end @media (max-width: 768px) */
+/* Hide bottom nav elements completely on desktop */
+@media (min-width: 769px) {
+  .bottom-nav,
+  .bn-overlay,
+  .bn-more-sheet {
+    display: none !important;
+  }
+}

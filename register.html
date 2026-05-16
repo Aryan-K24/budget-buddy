@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Register | Budget Buddy</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="auth.css" />
+  <style>
+    .consent-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 6px 0 6px;
+    }
+
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #faf9ff;
+      border: 1.5px solid rgba(124, 58, 237, 0.15);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+
+    .consent-item:has(input:checked) {
+      border-color: rgba(124, 58, 237, 0.5);
+      background: rgba(124, 58, 237, 0.04);
+    }
+
+    /* Hide native checkbox — broken on iOS/Android PWA */
+    .consent-item input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    /* Custom box */
+    .cb-box {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      margin-top: 2px;
+      border-radius: 5px;
+      border: 2px solid #c4b5fd;
+      background: #fafbff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, border-color 0.18s;
+      box-sizing: border-box;
+    }
+
+    /* Tick */
+    .cb-box::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .consent-item input[type="checkbox"]:checked + .cb-box {
+      background: #7c3aed;
+      border-color: #7c3aed;
+    }
+
+    .consent-item input[type="checkbox"]:checked + .cb-box::after {
+      opacity: 1;
+    }
+
+    .consent-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .consent-text a {
+      color: var(--purple);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .consent-text a:hover { color: var(--purple-dark); }
+
+    #registerBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15) !important;
+    }
+
+    .consent-error {
+      font-size: 0.75rem;
+      color: #dc2626;
+      display: none;
+      margin-top: 4px;
+    }
+    .consent-error.show { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="auth-container">
+  <h1>Budget Buddy</h1>
+  <p>Create your account</p>
+
+  <form id="registerForm" novalidate>
+    <input type="text"     id="name"     placeholder="Your name"              required autocomplete="name" />
+    <input type="email"    id="email"    placeholder="Email address"          required autocomplete="email" />
+    <input type="password" id="password" placeholder="Password (min 6 chars)" required autocomplete="new-password" minlength="6" />
+    <input type="text" inputmode="decimal" id="salary"  placeholder="Monthly Salary"  required />
+    <input type="text" inputmode="decimal" id="savings" placeholder="Savings Target"  required />
+
+    <select id="currency" required>
+      <option value="">Select Currency</option>
+      <option value="₹">₹ Indian Rupee (INR)</option>
+      <option value="$">$ US Dollar (USD)</option>
+      <option value="€">€ Euro (EUR)</option>
+      <option value="£">£ British Pound (GBP)</option>
+      <option value="Rs">Rs Sri Lankan Rupee (LKR)</option>
+      <option value="¥">¥ Japanese Yen (JPY)</option>
+      <option value="RM">RM Malaysian Ringgit (MYR)</option>
+    </select>
+
+    <div class="consent-label">Required Agreements</div>
+
+    <label class="consent-item">
+      <input type="checkbox" id="privacyConsent" required />
+      <span class="cb-box"></span>
+      <span class="consent-text">
+        I have read and agree to the
+        <a href="privacy.html?from=register" onclick="event.stopPropagation()">Privacy Policy</a>
+        and understand how my data is collected and used.
+      </span>
+    </label>
+
+    <label class="consent-item" style="margin-top: 8px;">
+      <input type="checkbox" id="termsConsent" required />
+      <span class="cb-box"></span>
+      <span class="consent-text">
+        I accept the
+        <a href="terms.html?from=register" onclick="event.stopPropagation()">Terms &amp; Conditions</a>
+        of Budget Buddy.
+      </span>
+    </label>
+
+    <p class="consent-error" id="consentError">
+      Please agree to both the Privacy Policy and Terms &amp; Conditions to continue.
+    </p>
+
+    <button type="submit" id="registerBtn" disabled>Register</button>
+  </form>
+
+  <div class="auth-links">
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+</div>
+
+<script type="module" src="register.js"></script>
+<script>
+  const privacyBox  = document.getElementById('privacyConsent');
+  const termsBox    = document.getElementById('termsConsent');
+  const registerBtn = document.getElementById('registerBtn');
+  const consentErr  = document.getElementById('consentError');
+
+  function updateBtn() {
+    registerBtn.disabled = !(privacyBox.checked && termsBox.checked);
+  }
+
+  privacyBox.addEventListener('change', updateBtn);
+  termsBox.addEventListener('change', updateBtn);
+
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    if (!privacyBox.checked || !termsBox.checked) {
+      e.preventDefault();
+      consentErr.classList.add('show');
+    } else {
+      consentErr.classList.remove('show');
+    }
+  });
+</script>
+</body>
+</html>
