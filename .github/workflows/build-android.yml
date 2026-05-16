@@ -1,0 +1,42 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:  # Manual trigger — you click "Run workflow" on GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install PWABuilder CLI
+        run: npm install -g @pwabuilder/cli
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build Android package
+        run: |
+          pwabuilder build android \
+            --url https://financialtracker-budgetbuddyfinal.netlify.app \
+            --output ./android-output
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: budget-buddy-android
+          path: ./android-output/**/*.apk
+          retention-days: 30
