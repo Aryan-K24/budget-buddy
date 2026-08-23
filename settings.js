@@ -3,13 +3,9 @@
  */
 
 import { state, initApp, saveUser, getCurrency } from "./app.js";
-import { logoutUser } from "./auth.js";
+import { logoutUser, deleteAccount } from "./auth.js";
 import { initNavbar } from "./navbar.js";
 import { showToast } from "./toast.js";
-
-/* ─────────────────────────────────────────
-   Helpers
-───────────────────────────────────────── */
 
 function attachCommaFormatter(id) {
   const input = document.getElementById(id);
@@ -43,10 +39,6 @@ function getEmoji(name) {
   }
   return "🏷️";
 }
-
-/* ─────────────────────────────────────────
-   Custom Currency Dropdown
-───────────────────────────────────────── */
 
 function initCurrencyDropdown() {
   const trigger = document.getElementById("currencyTrigger");
@@ -88,12 +80,7 @@ function initCurrencyDropdown() {
 
   list.querySelectorAll("li").forEach((li) => {
     li.setAttribute("tabindex", "-1");
-
-    li.addEventListener("click", (e) => {
-      e.stopPropagation();
-      selectOption(li);
-    });
-
+    li.addEventListener("click", (e) => { e.stopPropagation(); selectOption(li); });
     li.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectOption(li); }
       if (e.key === "Escape") { close(); trigger.focus(); }
@@ -110,10 +97,6 @@ function initCurrencyDropdown() {
     if (e.key === "Escape") close();
   });
 }
-
-/* ─────────────────────────────────────────
-   Settings Form
-───────────────────────────────────────── */
 
 function initSettingsForm() {
   const salaryInput   = document.getElementById("salaryInput");
@@ -133,23 +116,14 @@ function initSettingsForm() {
 
   function refreshDisplay() {
     const u = state.user;
-    // Use getCurrency() which always falls back to ₹ — never shows "—"
     const c = getCurrency();
-
     if (displaySalary) {
-      displaySalary.textContent =
-        u.salary != null && u.salary > 0
-          ? `${c}${u.salary.toLocaleString("en-IN")}`
-          : "—";
+      displaySalary.textContent = u.salary != null && u.salary > 0 ? `${c}${u.salary.toLocaleString("en-IN")}` : "—";
     }
     if (displaySavings) {
-      displaySavings.textContent =
-        u.savingsTarget != null
-          ? `${c}${u.savingsTarget.toLocaleString("en-IN")}`
-          : "—";
+      displaySavings.textContent = u.savingsTarget != null ? `${c}${u.savingsTarget.toLocaleString("en-IN")}` : "—";
     }
     if (displayName)     displayName.textContent     = u.name || "—";
-    // getCurrency() always returns the correct symbol, never empty string
     if (displayCurrCard) displayCurrCard.textContent = c;
     if (currencyTrigger) currencyTrigger.textContent = "Keep current";
   }
@@ -169,19 +143,12 @@ function initSettingsForm() {
     const name       = nameInput.value.trim();
     const currency   = currencyInput.value;
 
-    if (salary  !== null && (isNaN(salary)  || salary  <= 0)) {
-      showToast("Enter a valid salary", "error"); return;
-    }
-    if (savings !== null && (isNaN(savings) || savings < 0)) {
-      showToast("Savings cannot be negative", "error"); return;
-    }
+    if (salary  !== null && (isNaN(salary)  || salary  <= 0)) { showToast("Enter a valid salary", "error"); return; }
+    if (savings !== null && (isNaN(savings) || savings < 0))  { showToast("Savings cannot be negative", "error"); return; }
+
     const effectiveSalary  = salary  ?? state.user.salary;
     const effectiveSavings = savings ?? state.user.savingsTarget;
-    if (
-      effectiveSalary  != null &&
-      effectiveSavings != null &&
-      effectiveSavings >= effectiveSalary
-    ) {
+    if (effectiveSalary != null && effectiveSavings != null && effectiveSavings >= effectiveSalary) {
       showToast("Savings must be less than salary", "error"); return;
     }
 
@@ -189,25 +156,18 @@ function initSettingsForm() {
 
     if (salary !== null) {
       state.user.salary = salary;
-      if (month) {
-        month.salary = salary;
-        month.budget = Math.max(salary - (savings ?? state.user.savingsTarget ?? 0), 0);
-      }
+      if (month) { month.salary = salary; month.budget = Math.max(salary - (savings ?? state.user.savingsTarget ?? 0), 0); }
     }
     if (savings !== null) {
       state.user.savingsTarget = savings;
-      if (month) {
-        month.savingsTarget = savings;
-        month.budget = Math.max((salary ?? state.user.salary ?? 0) - savings, 0);
-      }
+      if (month) { month.savingsTarget = savings; month.budget = Math.max((salary ?? state.user.salary ?? 0) - savings, 0); }
     }
     if (name)     state.user.name     = name;
     if (currency) state.user.currency = currency;
 
-    isSaving     = true;
+    isSaving = true;
     btn.disabled = true;
 
-    // ── Optimistic update: instant feedback ──
     refreshDisplay();
     salaryInput.value   = "";
     savingsInput.value  = "";
@@ -218,7 +178,6 @@ function initSettingsForm() {
     showToast("Settings updated ✓", "success");
     setTimeout(() => { btn.textContent = "Save Changes"; }, 1400);
 
-    // ── Save in background silently ──
     saveUser(false).catch(() => {
       showToast("Couldn't sync to cloud. Changes may not persist.", "error");
     });
@@ -226,10 +185,6 @@ function initSettingsForm() {
     isSaving = false;
   });
 }
-
-/* ─────────────────────────────────────────
-   Custom Categories
-───────────────────────────────────────── */
 
 function renderCustomCategories() {
   const container = document.getElementById("customCategoriesList");
@@ -249,13 +204,7 @@ function renderCustomCategories() {
       <div class="category-row-left">
         <div class="category-icon">${getEmoji(cat)}</div>
         <span class="category-name" id="cat-name-${i}">${cat}</span>
-        <input
-          type="text"
-          id="cat-input-${i}"
-          value="${cat}"
-          class="category-edit-input"
-          aria-label="Edit category name"
-        />
+        <input type="text" id="cat-input-${i}" value="${cat}" class="category-edit-input" aria-label="Edit category name" />
       </div>
       <div class="category-actions">
         <button class="edit-cat-btn"  data-index="${i}" type="button">Edit</button>
@@ -281,33 +230,20 @@ function renderCustomCategories() {
     btn.addEventListener("click", async () => {
       const i       = Number(btn.dataset.index);
       const newName = document.getElementById(`cat-input-${i}`).value.trim();
-
       if (!newName) { showToast("Category cannot be empty", "error"); return; }
-
       const list    = state.user.customCategories || [];
       const oldName = list[i];
-
       if (newName === oldName) { renderCustomCategories(); return; }
-
-      const isDuplicate = list.some((c, idx) =>
-        idx !== i && c.toLowerCase() === newName.toLowerCase()
-      );
+      const isDuplicate = list.some((c, idx) => idx !== i && c.toLowerCase() === newName.toLowerCase());
       if (isDuplicate) { showToast("Category already exists", "error"); return; }
-
       list[i] = newName;
       state.user.customCategories = list;
-
-      const updatePast = confirm(
-        `Rename "${oldName}" to "${newName}"?\n\nOK = also update all past expenses\nCancel = only update dropdown`
-      );
+      const updatePast = confirm(`Rename "${oldName}" to "${newName}"?\n\nOK = also update all past expenses\nCancel = only update dropdown`);
       if (updatePast) {
         Object.values(state.user.months || {}).forEach((month) => {
-          (month.expenses || []).forEach((exp) => {
-            if (exp.category === oldName) exp.category = newName;
-          });
+          (month.expenses || []).forEach((exp) => { if (exp.category === oldName) exp.category = newName; });
         });
       }
-
       await saveUser(false);
       showToast("Category updated ✓", "success");
       renderCustomCategories();
@@ -331,14 +267,62 @@ async function deleteCategory(index) {
 }
 
 /* ─────────────────────────────────────────
+   Delete Account
+───────────────────────────────────────── */
+function initDeleteAccount() {
+  const deleteBtn    = document.getElementById("deleteAccountBtn");
+  const modal        = document.getElementById("deleteModal");
+  const cancelBtn    = document.getElementById("cancelDeleteBtn");
+  const confirmBtn   = document.getElementById("confirmDeleteBtn");
+  const confirmInput = document.getElementById("deleteConfirmInput");
+  const deleteError  = document.getElementById("deleteError");
+
+  if (!deleteBtn || !modal) return;
+
+  deleteBtn.addEventListener("click", () => {
+    modal.classList.add("active");
+    confirmInput.value = "";
+    deleteError.style.display = "none";
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    modal.classList.remove("active");
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("active");
+  });
+
+  confirmBtn.addEventListener("click", async () => {
+    if (confirmInput.value.trim() !== "DELETE") {
+      deleteError.textContent = "Please type DELETE exactly to confirm.";
+      deleteError.style.display = "block";
+      return;
+    }
+    confirmBtn.textContent = "Deleting...";
+    confirmBtn.disabled = true;
+    try {
+      await deleteAccount();
+      showToast("Account deleted successfully", "success");
+      setTimeout(() => { window.location.href = "index.html"; }, 1000);
+    } catch (err) {
+      deleteError.textContent = err.message || "Failed to delete. Please log out and log back in, then try again.";
+      deleteError.style.display = "block";
+      confirmBtn.textContent = "Delete";
+      confirmBtn.disabled = false;
+    }
+  });
+}
+
+/* ─────────────────────────────────────────
    Bootstrap
 ───────────────────────────────────────── */
 initApp(() => {
   initSettingsForm();
   renderCustomCategories();
-  initNotifSettings(); // ← ADD THIS
+  initNotifSettings();
+  initDeleteAccount();
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
@@ -349,12 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
     await logoutUser();
   });
 });
+
 async function initNotifSettings() {
-  const btn    = document.getElementById("enableNotifSettingsBtn");
-  const badge  = document.getElementById("notifStatus");
+  const btn   = document.getElementById("enableNotifSettingsBtn");
+  const badge = document.getElementById("notifStatus");
   if (!btn || !badge) return;
 
-  // Small delay for iOS to resolve permission state
   await new Promise(resolve => setTimeout(resolve, 500));
 
   if (!("Notification" in window)) {
@@ -364,7 +348,7 @@ async function initNotifSettings() {
   }
 
   const permission = Notification.permission;
-  
+
   if (permission === "granted") {
     badge.textContent = "✅ Enabled";
     badge.style.background = "rgba(34,197,94,0.1)";

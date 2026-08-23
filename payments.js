@@ -104,12 +104,14 @@ async function savePayment(e) {
   renderPayments();
   closePaymentModal();
   showToast(isEditing ? "Payment updated ✓" : "Payment saved ✓", "success");
-  channel.postMessage({ type: "expenses_updated" });
 
-  saveUser().catch(err => {
+  try {
+    await saveUser();
+    channel.postMessage({ type: "expenses_updated" });
+  } catch (err) {
     console.error("Save failed:", err);
     showToast("Failed to save", "error");
-  });
+  }
 }
 
 /* ─────────────────────────────────────────
@@ -198,10 +200,12 @@ async function handlePaymentActions(e) {
   }
 
   renderPayments();
-  channel.postMessage({ type: "expenses_updated" });
 
-  saveUser().catch(err => {
+  try {
+    await saveUser();
+    channel.postMessage({ type: "expenses_updated" });
+  } catch (err) {
     console.error("Save failed:", err);
     showToast("Failed to save", "error");
-  });
+  }
 }

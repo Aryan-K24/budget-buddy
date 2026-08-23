@@ -139,10 +139,7 @@
           </div>
           <div class="categories-badge">2 docs</div>
         </div>
-
         <div style="margin-top: 0.75rem;">
-
-          <!-- Privacy Policy row -->
           <a href="privacy.html" class="legal-link-row">
             <div class="legal-link-left">
               <div class="legal-link-icon">🔒</div>
@@ -153,9 +150,7 @@
             </div>
             <span class="legal-link-arrow">›</span>
           </a>
-
-          <!-- Terms & Conditions row -->
-          <a href="terms.html" class="legal-link-row" style="border-bottom: none;">
+          <a href="terms.html" class="legal-link-row legal-link-row--last">
             <div class="legal-link-left">
               <div class="legal-link-icon">📄</div>
               <div>
@@ -165,14 +160,43 @@
             </div>
             <span class="legal-link-arrow">›</span>
           </a>
-
         </div>
+      </div>
+
+      <!-- ── Danger Zone Card ── -->
+      <div class="categories-card danger-card">
+        <div class="categories-header">
+          <div>
+            <div class="categories-title danger-title">Danger Zone</div>
+            <div class="categories-subtitle">Permanently removes your account and all data</div>
+          </div>
+          <div class="categories-badge danger-badge">Irreversible</div>
+        </div>
+        <button id="deleteAccountBtn" type="button" class="delete-account-btn">
+          🗑️ Delete My Account
+        </button>
       </div>
 
     </div><!-- /.settings-wrapper -->
   </div><!-- /.settings-page -->
 
 </div><!-- /.dashboard -->
+
+<!-- ── Delete Confirmation Modal ── -->
+<div id="deleteModal" class="delete-modal-overlay">
+  <div class="delete-modal-box">
+    <div class="delete-modal-icon">⚠️</div>
+    <h3 class="delete-modal-title">Delete Account?</h3>
+    <p class="delete-modal-desc">This will permanently delete your account, all expenses, income records, and savings history. This cannot be undone.</p>
+    <p class="delete-modal-hint">Type <strong>DELETE</strong> to confirm:</p>
+    <input id="deleteConfirmInput" type="text" placeholder="Type DELETE here" class="delete-modal-input" />
+    <div class="delete-modal-actions">
+      <button id="cancelDeleteBtn" type="button" class="delete-modal-cancel">Cancel</button>
+      <button id="confirmDeleteBtn" type="button" class="delete-modal-confirm">Delete</button>
+    </div>
+    <p id="deleteError" class="delete-modal-error"></p>
+  </div>
+</div>
 
 <!-- ── BOTTOM NAV (mobile only) ── -->
 <nav class="bottom-nav">
@@ -227,65 +251,9 @@
   </button>
 </div>
 
-<style>
-  /* Legal link rows — added inline so settings.css stays clean */
-  .legal-link-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 4px;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s;
-    border-radius: 8px;
-    gap: 10px;
-  }
-
-  .legal-link-row:hover {
-    background: rgba(124, 58, 237, 0.04);
-  }
-
-  .legal-link-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .legal-link-icon {
-    width: 36px;
-    height: 36px;
-    background: rgba(124, 58, 237, 0.08);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .legal-link-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .legal-link-sub {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 1px;
-  }
-
-  .legal-link-arrow {
-    font-size: 1.1rem;
-    color: var(--purple);
-    flex-shrink: 0;
-    font-weight: 300;
-  }
-</style>
-
 <script type="module" src="settings.js"></script>
 <script type="module" src="bottom-nav.js"></script>
 
 </body>
 </html>
+<!-- verify no inline styles in delete section -->

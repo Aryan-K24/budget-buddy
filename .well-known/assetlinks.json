@@ -1,1 +1,14 @@
-[{"relation":["delegate_permission/common.handle_all_urls"],"target":{"namespace":"android_app","package_name":"app.budgetbuddy.finance","sha256_cert_fingerprints":["38:98:C2:FF:A0:01:25:D5:B8:3E:F3:49:C3:31:0A:AE:20:BE:9D:1B:BE:AD:91:A7:BF:4D:8C:2E:B6:98:EA:6D"]}}]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.budgetbuddy.finance",
+      "sha256_cert_fingerprints": [
+        "69:60:EE:DE:E1:B3:FD:30:D1:64:8F:81:9A:D1:BD:D2:A0:88:25:17:76:47:B7:CD:17:C3:15:80:88:61:81:21"
+      ]
+    }
+  }
+]

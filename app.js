@@ -143,7 +143,7 @@ async function checkForNewMonth() {
   const baseBudget        = prevData.budget || Math.max(state.user.salary - state.user.savingsTarget, 0);
   const extraTotal        = prevData.extraFunds.reduce((sum, f) => sum + f.amount, 0);
   const totalSpent        = prevData.expenses.reduce((sum, e) => sum + e.amount, 0);
-  const previousRemaining = baseBudget + extraTotal - totalSpent;
+  const previousRemaining = baseBudget + extraTotal + (prevData.carryForward || 0) - totalSpent;
 
   state.user.currentMonth = newMonth;
   if (!state.user.months[newMonth]) {

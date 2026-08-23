@@ -1,4 +1,4 @@
-const CACHE_NAME = "budget-buddy-v15"; 
+const CACHE_NAME = "budget-buddy-v16"; 
 
 const ASSETS = [
   "/", "/index.html", "/login.html", "/register.html",

@@ -3,10 +3,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  doc, setDoc, getDoc
+  doc, setDoc, getDoc, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 async function registerUser({ name, email, password, salary, savingsTarget, currency }) {
@@ -111,4 +112,14 @@ function requireAuth(onReady) {
   });
 }
 
-export { registerUser, loginUser, logoutUser, fetchUserData, requireAuth };
+async function deleteAccount() {
+  const firebaseUser = auth.currentUser;
+  if (!firebaseUser) throw new Error("No user logged in.");
+  // Delete Firestore data first
+  await deleteDoc(doc(db, "users", firebaseUser.uid));
+  // Then delete the Firebase Auth account
+  await deleteUser(firebaseUser);
+  await signOut(auth);
+}
+
+export { registerUser, loginUser, logoutUser, fetchUserData, requireAuth, deleteAccount };

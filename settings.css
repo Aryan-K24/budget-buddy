@@ -500,4 +500,261 @@
     overflow: visible !important;
   }
 
-} /* ← this closes @media */
+} /* ← this closes @media *//* ========================
+   LEGAL LINK ROWS
+======================== */
+.legal-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.legal-link-row--last {
+  border-bottom: none;
+}
+
+.legal-link-row:hover {
+  background: rgba(124, 58, 237, 0.04);
+}
+
+.legal-link-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.legal-link-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.legal-link-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.legal-link-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.legal-link-arrow {
+  font-size: 1.1rem;
+  color: var(--purple);
+  flex-shrink: 0;
+  font-weight: 300;
+}
+
+/* ========================
+   DANGER ZONE CARD
+======================== */
+.danger-card {
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+.danger-title {
+  color: #ef4444 !important;
+}
+
+.danger-badge {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+}
+
+.delete-account-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: 1.5px solid #ef4444;
+  color: #ef4444;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 0.75rem;
+}
+
+.delete-account-btn:hover,
+.delete-account-btn:active {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* ========================
+   DELETE MODAL
+======================== */
+.delete-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.delete-modal-overlay.active {
+  display: flex;
+}
+
+.delete-modal-box {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 28px 24px;
+  max-width: 360px;
+  width: 100%;
+}
+
+.delete-modal-icon {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.delete-modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.delete-modal-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.delete-modal-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.delete-modal-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+  text-align: center;
+  letter-spacing: 2px;
+  box-sizing: border-box;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.delete-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-modal-cancel {
+  flex: 1;
+  padding: 11px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--card-bg);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.delete-modal-confirm {
+  flex: 1;
+  padding: 11px;
+  border-radius: 8px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-modal-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.delete-modal-error {
+  color: #ef4444;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+  display: none;
+}
+/* Fix page sliding */
+.settings-page {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Fix modal centering */
+.delete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 9999;
+  background: rgba(0,0,0,0.5);
+}
+
+.delete-modal-overlay.active {
+  display: flex;
+}
+
+.delete-modal-box {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
+}
+
+/* Fix legal card layout */
+.legal-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.legal-link-row--last {
+  border-bottom: none;
+}
