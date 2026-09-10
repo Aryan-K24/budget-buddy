@@ -1,0 +1,479 @@
+/* ============================================================
+   BUDGET BUDDY — "MIDNIGHT GLASS" DARK THEME (performance-scoped)
+   Opt-in only: html[data-theme="dark"]. Light mode is unchanged.
+
+   Perf notes for future-you:
+   - The purple/blue glow is a flat two-stop radial-gradient
+     background, NOT a blurred element. Free to paint, no GPU cost.
+   - Real backdrop-filter blur is used in exactly two places:
+     .hero-balance (the "This Month Spent" card) and the bottom
+     nav / more-sheet (already blurred in light mode). Every other
+     card/box is a flat translucent fill — same look, no blur cost.
+============================================================ */
+
+html[data-theme="dark"] {
+  --purple: #8b5cf6;
+  --purple-dark: #6d3fd6;
+  --blue: #7c9bff;
+  --bg: #0b0710;
+  --text: #f5f3fb;
+  --text-muted: #a99fc4;
+  --card-bg: rgba(255, 255, 255, 0.045);
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow-sm: 0 5px 18px rgba(0,0,0,.30);
+  --shadow-md: 0 12px 32px rgba(0,0,0,.40);
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(600px 400px at 10% -5%, rgba(124,58,237,0.22), transparent 60%),
+    radial-gradient(500px 380px at 95% 30%, rgba(59,130,246,0.16), transparent 60%),
+    #0b0710 !important;
+  background-attachment: fixed !important;
+  color: #f5f3fb !important;
+}
+
+/* ── Outer dashboard shell (already glass in light mode) ── */
+html[data-theme="dark"] .dashboard {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── Navbar ── */
+html[data-theme="dark"] .navbar {
+  background: rgba(11, 7, 16, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme="dark"] .logo { color: #f5f3fb !important; }
+html[data-theme="dark"] .tagline { color: #a99fc4 !important; }
+html[data-theme="dark"] .nav-links li { color: #a99fc4 !important; }
+html[data-theme="dark"] .nav-links li.active,
+html[data-theme="dark"] .nav-links li:hover { color: #c4b5fd !important; }
+html[data-theme="dark"] .nav-links li::after { background: #8b5cf6 !important; }
+html[data-theme="dark"] .nav-links.active,
+html[data-theme="dark"] .nav-links a {
+  background: #15101f !important;
+  color: #e7e2f5 !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+html[data-theme="dark"] .icon-link a { color: #e7e2f5 !important; }
+html[data-theme="dark"] .menu-toggle { color: #e7e2f5 !important; }
+
+/* ── Summary cards + boxes (flat, no blur) ── */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .box {
+  background: rgba(255,255,255,0.045) !important;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+}
+html[data-theme="dark"] .card h3,
+html[data-theme="dark"] .box p,
+html[data-theme="dark"] .budget-text,
+html[data-theme="dark"] .tagline { color: #a99fc4 !important; }
+html[data-theme="dark"] .box h2 { color: #f5f3fb !important; }
+html[data-theme="dark"] .amount { color: #f5f3fb !important; }
+html[data-theme="dark"] .amount.expense,
+html[data-theme="dark"] .history-item .amount { color: #e3a5a5 !important; }
+
+/* ── Hero balance card: harmonized with other cards ── */
+html[data-theme="dark"] .card.hero-balance {
+  background: rgba(255,255,255,0.045) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ── Action Buttons (Edit / Delete) ── */
+html[data-theme="dark"] .extra-actions button,
+html[data-theme="dark"] .expense-actions button,
+html[data-theme="dark"] .history-actions button,
+html[data-theme="dark"] .category-actions button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #f5f3fb !important;
+}
+html[data-theme="dark"] .extra-actions button:hover,
+html[data-theme="dark"] .expense-actions button:hover,
+html[data-theme="dark"] .history-actions button:hover,
+html[data-theme="dark"] .category-actions button:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+html[data-theme="dark"] .progress-bar { background: #2a2438 !important; }
+html[data-theme="dark"] .progress-fill { background: #8b5cf6 !important; }
+
+/* ── Upcoming payments ── */
+html[data-theme="dark"] .payment { border-bottom-color: rgba(255,255,255,0.08) !important; }
+html[data-theme="dark"] .due.normal  { background:#17301f !important; color:#8fd0a4 !important; }
+html[data-theme="dark"] .due.warning { background:#332a14 !important; color:#e4c56a !important; }
+html[data-theme="dark"] .due.urgent  { background:#33191c !important; color:#e4a3a3 !important; }
+
+/* ── Buttons ── */
+html[data-theme="dark"] .finance-save-btn,
+html[data-theme="dark"] .add-btn,
+html[data-theme="dark"] .extra-form button,
+html[data-theme="dark"] .expense-form button,
+html[data-theme="dark"] #enableNotifBtn,
+html[data-theme="dark"] .edit-cat-btn {
+  background: #8b5cf6 !important;
+  color: #fff !important;
+}
+html[data-theme="dark"] .finance-save-btn:hover,
+html[data-theme="dark"] .extra-form button:hover,
+html[data-theme="dark"] .expense-form button:hover {
+  background: #7c4de8 !important;
+}
+
+/* ── Inputs & Selects (shared across expense/history/payments/extra funds/settings) ── */
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .finance-input,
+html[data-theme="dark"] .extra-edit input {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #f5f3fb !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #7c7492 !important;
+}
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus {
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+}
+
+/* ── All Dropdowns / Select Boxes (Closed State) ── */
+html[data-theme="dark"] select,
+html[data-theme="dark"] .expense-form select,
+html[data-theme="dark"] .history-filters select,
+html[data-theme="dark"] .modal-content select,
+html[data-theme="dark"] .edit-category,
+html[data-theme="dark"] .custom-select-trigger {
+  color-scheme: dark !important;
+  background-color: #1a1226 !important;
+  color: #f5f3fb !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 8px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c4b5fd' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px !important;
+  padding-right: 36px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  cursor: pointer !important;
+}
+
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] .custom-select-trigger:focus,
+html[data-theme="dark"] .edit-category:focus {
+  border-color: #8b5cf6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25) !important;
+}
+
+/* ── Dropdown Options Menu (Open Popup State on all platforms) ── */
+html[data-theme="dark"] select option,
+html[data-theme="dark"] option,
+html[data-theme="dark"] optgroup {
+  background-color: #1a1226 !important;
+  color: #f5f3fb !important;
+  padding: 10px 14px !important;
+}
+
+/* Highlighted & Hovered Options */
+html[data-theme="dark"] select option:checked,
+html[data-theme="dark"] select option:hover,
+html[data-theme="dark"] option:checked,
+html[data-theme="dark"] option:hover {
+  background-color: #2b1d44 !important;
+  color: #c4b5fd !important;
+}
+
+/* ── Date & Month Pickers ── */
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="month"],
+html[data-theme="dark"] .history-filters input {
+  color-scheme: dark !important;
+  background-color: #1a1226 !important;
+  color: #f5f3fb !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+}
+
+/* ── Custom Category input (when '+ Add custom category' is chosen) ── */
+html[data-theme="dark"] #custom-category,
+html[data-theme="dark"] .category-edit-input {
+  background-color: #1a1226 !important;
+  color: #f5f3fb !important;
+  border: 1.5px solid #8b5cf6 !important;
+}
+
+/* ── Custom Select (Settings Currency Dropdown) ── */
+html[data-theme="dark"] .custom-select-options {
+  background-color: #1a1226 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
+}
+html[data-theme="dark"] .custom-select-options li {
+  color: #f5f3fb !important;
+  background: transparent !important;
+}
+html[data-theme="dark"] .custom-select-options li:hover,
+html[data-theme="dark"] .custom-select-options li[aria-selected="true"] {
+  background-color: #2b1d44 !important;
+  color: #c4b5fd !important;
+}
+
+/* ── Expense page ── */
+html[data-theme="dark"] .expense-form,
+html[data-theme="dark"] .expense-item { background: rgba(255,255,255,0.045) !important; }
+html[data-theme="dark"] .expense-item .amount,
+html[data-theme="dark"] .expense-item .expense-amount { color: #e3a5a5 !important; }
+
+/* ── History page ── */
+html[data-theme="dark"] .page-title { color: #f5f3fb !important; }
+html[data-theme="dark"] .monthly-review,
+html[data-theme="dark"] .history-item { background: rgba(255,255,255,0.045) !important; color: #e7e2f5 !important; }
+html[data-theme="dark"] .history-item .date { color: #a99fc4 !important; }
+html[data-theme="dark"] .empty { color: #7c7492 !important; }
+
+/* ── Payments page ── */
+html[data-theme="dark"] .payment-card { background: rgba(255,255,255,0.045) !important; border-color: rgba(255,255,255,0.1) !important; }
+html[data-theme="dark"] .payment-card.safe    { background:#16261c !important; border-color:#2a4a34 !important; }
+html[data-theme="dark"] .payment-card.warning { background:#2c2414 !important; border-color:#55461f !important; }
+html[data-theme="dark"] .payment-card.danger  { background:#2b1c1e !important; border-color:#52312d !important; }
+html[data-theme="dark"] .payment-card *  { color: #e7e2f5; }
+html[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.65) !important; }
+html[data-theme="dark"] .modal-content { background: #15101f !important; color: #f5f3fb !important; border-color: rgba(255,255,255,0.1) !important; }
+html[data-theme="dark"] .cancel-btn { background: rgba(255,255,255,0.08) !important; color: #e7e2f5 !important; }
+
+/* ── Extra funds page ── */
+html[data-theme="dark"] .extra-card,
+html[data-theme="dark"] .extra-edit { background: rgba(255,255,255,0.045) !important; }
+html[data-theme="dark"] .extra-date,
+html[data-theme="dark"] .extra-note { color: #a99fc4 !important; }
+html[data-theme="dark"] .extra-amount { color: #8fd0a4 !important; }
+
+/* ── Settings: finance card ── */
+html[data-theme="dark"] .finance-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)) !important;
+  border: 1px solid rgba(139,92,246,0.16) !important;
+}
+html[data-theme="dark"] .finance-value-box { background: rgba(255,255,255,0.05) !important; }
+html[data-theme="dark"] .finance-value-label,
+html[data-theme="dark"] .finance-input-label { color: #a99fc4 !important; }
+html[data-theme="dark"] .finance-value-amount { color: #f5f3fb !important; }
+html[data-theme="dark"] .finance-card-glow { background: rgba(139,92,246,0.16) !important; }
+html[data-theme="dark"] .finance-card-glow2 { background: rgba(59,130,246,0.1) !important; }
+
+/* ── Settings: categories / legal / danger cards ── */
+html[data-theme="dark"] .categories-card {
+  background: rgba(255,255,255,0.045) !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+html[data-theme="dark"] .categories-title,
+html[data-theme="dark"] .legal-link-title,
+html[data-theme="dark"] .category-name { color: #f5f3fb !important; }
+html[data-theme="dark"] .categories-subtitle,
+html[data-theme="dark"] .legal-link-sub,
+html[data-theme="dark"] .empty-categories { color: #a99fc4 !important; }
+html[data-theme="dark"] .categories-badge {
+  background: rgba(139,92,246,0.18) !important;
+  color: #c4b5fd !important;
+}
+html[data-theme="dark"] .category-row,
+html[data-theme="dark"] .legal-link-row { border-bottom-color: rgba(255,255,255,0.08) !important; }
+html[data-theme="dark"] .legal-link-row:hover { background: rgba(139,92,246,0.06) !important; }
+html[data-theme="dark"] .legal-link-icon,
+html[data-theme="dark"] .category-icon { background: rgba(255,255,255,0.06) !important; }
+html[data-theme="dark"] .save-cat-btn { background:#17301f !important; color:#8fd0a4 !important; }
+html[data-theme="dark"] .remove-btn { background:#2b1c1e !important; color:#e4a3a3 !important; }
+html[data-theme="dark"] .danger-card { border-color: rgba(228,90,90,0.25) !important; }
+html[data-theme="dark"] .danger-title { color: #e4a3a3 !important; }
+html[data-theme="dark"] .danger-badge { background: rgba(228,90,90,0.16) !important; color: #e4a3a3 !important; }
+html[data-theme="dark"] .delete-account-btn { background: rgba(228,90,90,0.14) !important; color: #e4a3a3 !important; }
+
+/* ── Appearance switch (dark) ── */
+html[data-theme="dark"] .appearance-switch-track { background: #3a3450; }
+html[data-theme="dark"] .appearance-switch input:checked + .appearance-switch-track { background: var(--purple) !important; }
+
+/* ── Delete confirmation modal ── */
+html[data-theme="dark"] .delete-modal-overlay { background: rgba(0,0,0,.68) !important; }
+html[data-theme="dark"] .delete-modal-box {
+  background: #15101f !important;
+  color: #f5f3fb !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+html[data-theme="dark"] .delete-modal-title,
+html[data-theme="dark"] .delete-modal-desc,
+html[data-theme="dark"] .delete-modal-hint { color: #e7e2f5 !important; }
+html[data-theme="dark"] .delete-modal-input { background: rgba(255,255,255,0.05) !important; color: #f5f3fb !important; border-color: rgba(255,255,255,0.14) !important; }
+
+/* ── Bottom nav / more sheet (already blurred in light mode — kept) ── */
+html[data-theme="dark"] .bottom-nav {
+  background: rgba(15,10,24,0.85) !important;
+  border-top-color: rgba(255,255,255,0.08) !important;
+}
+html[data-theme="dark"] .bn-btn {
+  color: #a99fc4 !important;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+html[data-theme="dark"] .bn-btn.bn-active {
+  color: #c4b5fd !important;
+  background: rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.25) !important;
+}
+html[data-theme="dark"] .bn-btn.bn-active .bn-icon {
+  color: #c4b5fd !important;
+  background: none !important;
+}
+html[data-theme="dark"] .bn-btn.bn-active::after {
+  display: none !important;
+}
+html[data-theme="dark"] .bn-more-sheet {
+  background: rgba(15, 10, 24, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme="dark"] .bn-sheet-item {
+  color: #e7e2f5 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+html[data-theme="dark"] .bn-sheet-item:hover,
+html[data-theme="dark"] .bn-sheet-item:active {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+html[data-theme="dark"] .bn-sheet-icon {
+  background: rgba(139, 92, 246, 0.16) !important;
+  color: #c4b5fd !important;
+}
+html[data-theme="dark"] .bn-sheet-item.bn-logout-item .bn-sheet-icon {
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* ── Chart legend ── */
+html[data-theme="dark"] #chartLegend,
+html[data-theme="dark"] #chartLegend div,
+html[data-theme="dark"] .chart-legend-row { color: #e7e2f5 !important; }
+html[data-theme="dark"] .chart-legend-label { color: #c4b5fd !important; }
+html[data-theme="dark"] .chart-legend-value { color: #f5f3fb !important; font-weight: 600 !important; }
+
+/* ── Savings Planner Results in Dark Mode ── */
+html[data-theme="dark"] .planner-stat-card {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.2) !important;
+}
+html[data-theme="dark"] .planner-stat-label { color: #a99fc4 !important; }
+html[data-theme="dark"] .planner-stat-value { color: #f5f3fb !important; }
+html[data-theme="dark"] .planner-stat-value.purple { color: #c4b5fd !important; }
+html[data-theme="dark"] .planner-milestone-pill {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  color: #c4b5fd !important;
+}
+html[data-theme="dark"] .planner-milestone-pill.is-last {
+  background: rgba(139, 92, 246, 0.22) !important;
+  border-color: rgba(139, 92, 246, 0.4) !important;
+  color: #e9d5ff !important;
+}
+html[data-theme="dark"] .planner-milestone-pill.is-half {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+  color: #93c5fd !important;
+}
+html[data-theme="dark"] .planner-timeline-btn {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  color: #c4b5fd !important;
+}
+html[data-theme="dark"] .planner-goal-box {
+  background: rgba(139, 92, 246, 0.12) !important;
+  border: 1px solid rgba(139, 92, 246, 0.28) !important;
+}
+html[data-theme="dark"] .planner-goal-title,
+html[data-theme="dark"] .planner-goal-target { color: #f5f3fb !important; }
+html[data-theme="dark"] .planner-goal-badge {
+  background: #8b5cf6 !important;
+  color: #fff !important;
+}
+html[data-theme="dark"] .planner-reset-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e7e2f5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+html[data-theme="dark"] .planner-reset-btn:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* ── Bottom Sheet Row Right Arrow ── */
+.bn-sheet-arrow {
+  margin-left: auto;
+  opacity: 0.35;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+html[data-theme="dark"] .bn-sheet-arrow {
+  color: #94a3b8 !important;
+  opacity: 0.65 !important;
+}
+html[data-theme="dark"] .bn-btn {
+  color: #a99fc4 !important;
+  border-radius: 14px;
+  margin: 4px 2px;
+  height: calc(100% - 8px);
+  transition: all 0.2s;
+}
+html[data-theme="dark"] .bn-btn.bn-active {
+  color: #c4b5fd !important;
+  background: rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.25) !important;
+}
+html[data-theme="dark"] .bn-btn.bn-active .bn-icon {
+  color: #c4b5fd !important;
+  background: none !important;
+}
+
+/* ── Settings Page (Dark Mode) ── */
+html[data-theme="dark"] .finance-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.28) 0%, rgba(20, 14, 32, 0.85) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35) !important;
+}
+html[data-theme="dark"] .finance-value-box {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme="dark"] .finance-input {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #f5f3fb !important;
+}
+html[data-theme="dark"] .finance-save-btn {
+  background: var(--purple) !important;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .category-row {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme="dark"] .custom-select-options {
+  background: #15101f !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #f5f3fb !important;
+}
+html[data-theme="dark"] .custom-select-options li {
+  color: #f5f3fb !important;
+}
+html[data-theme="dark"] .custom-select-options li:hover {
+  background: rgba(139, 92, 246, 0.2) !important;
+}

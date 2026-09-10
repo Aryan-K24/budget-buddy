@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){try{var t=localStorage.getItem("bb-theme");if(t==="dark"){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Savings Planner | Budget Buddy</title>
   <link rel="stylesheet" href="common.css">
   <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="expense.css" />
+  <link rel="stylesheet" href="dark-theme.css">
 </head>
 
 <body>
@@ -20,13 +22,13 @@
       <div class="menu-toggle" id="menuToggle">☰</div>
 
       <ul class="nav-links" id="mainNav">
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="expense.html">Expenses</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="payments.html">Payments</a></li>
-        <li class="active"><a href="savings_planner.html">Savings Planner</a></li>
-        <li><a href="extra_funds.html">Extra Funds</a></li>
-        <li class="icon-link"><a href="settings.html" title="Settings">⚙️</a></li>
+        <li><a href='/dashboard'>Dashboard</a></li>
+        <li><a href='/expense'>Expenses</a></li>
+        <li><a href='/history'>History</a></li>
+        <li><a href='/payments'>Payments</a></li>
+        <li class="active"><a href='/savings_planner'>Savings Planner</a></li>
+        <li><a href='/extra_funds'>Extra Funds</a></li>
+        <li class="icon-link"><a href='/settings' title='Settings'>⚙️</a></li>
         <li class="icon-link"><a href="#" id="logoutBtn" title="Logout">⏻</a></li>
       </ul>
     </nav>
@@ -91,15 +93,15 @@
   <div class="bn-more-sheet" id="bn-more-sheet">
     <div class="bn-sheet-handle"></div>
     <div class="bn-sheet-title">More</div>
-    <a href="savings_planner.html" class="bn-sheet-item">
+    <a class='bn-sheet-item' href='/savings_planner'>
       <div class="bn-sheet-icon">📊</div>
       Savings Planner
     </a>
-    <a href="extra_funds.html" class="bn-sheet-item">
+    <a class='bn-sheet-item' href='/extra_funds'>
       <div class="bn-sheet-icon">💰</div>
       Extra Funds
     </a>
-    <a href="settings.html" class="bn-sheet-item">
+    <a class='bn-sheet-item' href='/settings'>
       <div class="bn-sheet-icon">⚙️</div>
       Settings
     </a>

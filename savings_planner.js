@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
           : isHalf
             ? `50% there — ${formatTime(m)}`
             : `Start — Month 1`;
-        milestonesHTML += `<div style="display:flex;align-items:center;gap:6px;font-size:12px;background:${bg};padding:5px 12px;border-radius:100px;color:${color};font-weight:${weight};"><span style="width:8px;height:8px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0;"></span>${label} · ${c}${saved.toLocaleString("en-IN")} saved</div>`;
+        milestonesHTML += `<div class="planner-milestone-pill ${isLast ? 'is-last' : isHalf ? 'is-half' : ''}"><span class="planner-dot" style="background:${dot};"></span>${label} · ${c}${saved.toLocaleString("en-IN")} saved</div>`;
       });
 
       const resultContent = document.getElementById("resultContent");
@@ -194,38 +194,38 @@ document.addEventListener("DOMContentLoaded", () => {
       // as a DOM node, so it is never orphaned across multiple submissions
       resultContent.innerHTML = `
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.25rem;">
-          <div style="background:#f8f7ff;border-radius:10px;padding:0.9rem 1rem;">
-            <div style="font-size:11px;color:#9ca3af;margin-bottom:4px;">Monthly saving</div>
-            <div style="font-size:1.3rem;font-weight:600;color:#7c3aed;">${c}${fmtItemSaving}</div>
+          <div class="planner-stat-card">
+            <div class="planner-stat-label">Monthly saving</div>
+            <div class="planner-stat-value purple">${c}${fmtItemSaving}</div>
           </div>
-          <div style="background:#f8f7ff;border-radius:10px;padding:0.9rem 1rem;">
-            <div style="font-size:11px;color:#9ca3af;margin-bottom:4px;">Item price</div>
-            <div style="font-size:1.3rem;font-weight:600;color:#1e1b4b;">${c}${fmtPrice}</div>
+          <div class="planner-stat-card">
+            <div class="planner-stat-label">Item price</div>
+            <div class="planner-stat-value">${c}${fmtPrice}</div>
           </div>
-          <div style="background:#f8f7ff;border-radius:10px;padding:0.9rem 1rem;">
-            <div style="font-size:11px;color:#9ca3af;margin-bottom:4px;">Time needed</div>
-            <div style="font-size:1.3rem;font-weight:600;color:#7c3aed;">${timeString}</div>
+          <div class="planner-stat-card">
+            <div class="planner-stat-label">Time needed</div>
+            <div class="planner-stat-value purple">${timeString}</div>
           </div>
         </div>
 
-        <div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Progress timeline</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Progress timeline</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0.5rem;">${milestonesHTML}</div>
 
         <div style="margin-bottom:1.25rem;">
-          <button type="button" id="toggleTimeline" style="background:none;border:1px solid rgba(124,58,237,0.2);color:#7c3aed;font-size:12px;padding:5px 14px;border-radius:100px;cursor:pointer;width:auto;margin-top:6px;">▼ Show full timeline</button>
+          <button type="button" id="toggleTimeline" class="planner-timeline-btn">▼ Show full timeline</button>
           <div id="fullTimeline" style="display:none;margin-top:10px;"></div>
         </div>
 
-        <div style="background:#f0f4ff;border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <div class="planner-goal-box">
           <div>
-            <div style="font-size:11px;color:#9ca3af;margin-bottom:2px;">You can buy</div>
-            <div style="font-size:1.1rem;font-weight:600;color:#1e1b4b;">${itemName}</div>
-            <div style="font-size:1rem;font-weight:600;color:#7c3aed;margin-top:2px;">by ${targetMonth}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">You can buy</div>
+            <div class="planner-goal-title">${itemName}</div>
+            <div class="planner-goal-target">by ${targetMonth}</div>
           </div>
-          <div style="background:#7c3aed;color:white;font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;">${timeString} away</div>
+          <div class="planner-goal-badge">${timeString} away</div>
         </div>
 
-        <button type="button" id="resetBtn" style="margin-top:4px;padding:10px 20px;background:#f1f5f9;color:#475569;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;display:block;">Reset</button>
+        <button type="button" id="resetBtn" class="planner-reset-btn">Reset</button>
       `;
 
       // Wire up reset — button is now in the DOM after innerHTML
@@ -245,10 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const isLast = m === totalMonths;
           const isHalf = m === halfwayMonths;
           const dot    = isLast ? "#7c3aed" : isHalf ? "#3b82f6" : "#9ca3af";
-          const bg     = isLast ? "#f0f4ff"  : isHalf ? "#eff6ff"  : "#f8f7ff";
-          const color  = isLast ? "#7c3aed"  : isHalf ? "#3b82f6"  : "#4b5563";
-          const weight = (isLast || isHalf) ? "600" : "400";
-          allPills += `<div style="display:flex;align-items:center;gap:5px;font-size:11px;background:${bg};padding:4px 10px;border-radius:100px;color:${color};font-weight:${weight};"><span style="width:7px;height:7px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0;"></span>Month ${m} · ${c}${saved.toLocaleString("en-IN")}${isHalf ? " · 50%" : ""}${isLast ? " 🎉" : ""}</div>`;
+          allPills += `<div class="planner-milestone-pill ${isLast ? 'is-last' : isHalf ? 'is-half' : ''}"><span class="planner-dot" style="background:${dot};"></span>Month ${m} · ${c}${saved.toLocaleString("en-IN")}${isHalf ? " · 50%" : ""}${isLast ? " 🎉" : ""}</div>`;
         }
         allPills += "</div>";
         fullTimeline.innerHTML = allPills;

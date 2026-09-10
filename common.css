@@ -655,3 +655,116 @@ button {
     display: none !important;
   }
 }
+
+/* ========================
+   SAVINGS PLANNER RESULTS
+======================== */
+.planner-stat-card {
+  background: #f8f7ff;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.planner-stat-label {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+.planner-stat-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1e1b4b;
+}
+.planner-stat-value.purple {
+  color: #7c3aed;
+}
+.planner-milestone-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  background: #f8f7ff;
+  padding: 5px 12px;
+  border-radius: 100px;
+  color: #4b5563;
+  font-weight: 400;
+}
+.planner-milestone-pill.is-last {
+  background: #f0f4ff;
+  color: #7c3aed;
+  font-weight: 600;
+}
+.planner-milestone-pill.is-half {
+  background: #eff6ff;
+  color: #3b82f6;
+  font-weight: 600;
+}
+.planner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.planner-timeline-btn {
+  background: none;
+  border: 1px solid rgba(124,58,237,0.2);
+  color: #7c3aed;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  cursor: pointer;
+  width: auto;
+  margin-top: 6px;
+}
+.planner-goal-box {
+  background: #f0f4ff;
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.planner-goal-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e1b4b;
+}
+.planner-goal-target {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7c3aed;
+  margin-top: 2px;
+}
+.planner-goal-badge {
+  background: #7c3aed;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+.planner-reset-btn {
+  margin-top: 4px;
+  padding: 10px 20px;
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: block;
+}
+/* ── Suppress Netlify Drawer / Deploy Preview Badge ── */
+netlify-drawer,
+#netlify-drawer,
+.netlify-drawer,
+div[class*="netlify-drawer"],
+div[id*="netlify-drawer"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

@@ -299,10 +299,10 @@ function renderSpendingChart() {
   legend.innerHTML = labels.map((label, i) => {
     const pct = Math.round(data[i] / total * 100);
     return `
-      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#4b5563;">
+      <div class="chart-legend-row" style="display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;">
         <span style="width:10px;height:10px;border-radius:2px;background:${colors[i]};display:inline-block;flex-shrink:0;"></span>
-        <span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${label}</span>
-        <span style="font-weight:500;color:#1e1b4b;">${c}${data[i].toLocaleString("en-IN")} (${pct}%)</span>
+        <span class="chart-legend-label" style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);">${label}</span>
+        <span class="chart-legend-value" style="font-weight:600;color:var(--text);">${c}${data[i].toLocaleString("en-IN")} (${pct}%)</span>
       </div>`;
   }).join("");
 }

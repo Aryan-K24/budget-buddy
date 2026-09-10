@@ -322,11 +322,13 @@ initApp(() => {
   renderCustomCategories();
   initNotifSettings();
   initDeleteAccount();
+  initAppearanceSettings();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
   initCurrencyDropdown();
+  initAppearanceSettings();
 
   document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -375,5 +377,30 @@ async function initNotifSettings() {
     badge.textContent = "✅ Enabled";
     badge.style.background = "rgba(34,197,94,0.1)";
     badge.style.color = "#16a34a";
+  });
+}
+function initAppearanceSettings() {
+  const toggle = document.getElementById("darkModeToggle");
+  const label  = document.getElementById("appearanceMode");
+  if (!toggle) return;
+
+  const currentTheme = localStorage.getItem("bb-theme");
+  const isDark = currentTheme === "dark" || document.documentElement.getAttribute("data-theme") === "dark";
+  toggle.checked = isDark;
+  if (label) label.textContent = isDark ? "Dark mode (Midnight Blue)" : "Light mode";
+
+  toggle.addEventListener("change", () => {
+    if (toggle.checked) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("bb-theme", "dark");
+      if (label) label.textContent = "Dark mode (Midnight Blue)";
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("bb-theme", "light");
+      if (label) label.textContent = "Light mode";
+    }
+    try {
+      if (typeof window.__bbUpdateThemeIcons === "function") window.__bbUpdateThemeIcons();
+    } catch(e) {}
   });
 }
