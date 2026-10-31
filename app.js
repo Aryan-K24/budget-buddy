@@ -22,6 +22,12 @@ function initApp(onReady) {
     migrateCategories();
     await checkForNewMonth();
     onReady(state.user);
+
+    // Silent background self-healing notification check
+    try {
+      const { autoSyncNotificationToken } = await import("./notifications.js");
+      autoSyncNotificationToken();
+    } catch (_) {}
   });
 }
 

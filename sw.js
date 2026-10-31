@@ -1,4 +1,4 @@
-const CACHE_NAME = "budget-buddy-v16"; 
+const CACHE_NAME = "budget-buddy-v17"; 
 
 const ASSETS = [
   "/", "/index.html", "/login.html", "/register.html",
@@ -91,5 +91,17 @@ self.addEventListener("fetch", event => {
         }
       });
     })
+  );
+});
+// ── Push subscription rotation ──
+self.addEventListener("pushsubscriptionchange", event => {
+  event.waitUntil(
+    self.registration.pushManager.subscribe(event.oldSubscription?.options || { userVisibleOnly: true })
+      .then(newSub => {
+        console.log("Push subscription rotated:", newSub);
+      })
+      .catch(err => {
+        console.warn("pushsubscriptionchange handled:", err);
+      })
   );
 });

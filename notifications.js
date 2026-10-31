@@ -66,6 +66,48 @@ export async function initNotifications() {
   }
 }
 
+let _syncingToken = false;
+export async function autoSyncNotificationToken() {
+  if (_syncingToken) return;
+  if (!("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
+  if (!state.firebaseUser) return;
+
+  _syncingToken = true;
+  try {
+    const messaging = await getMessagingInstance();
+    if (!messaging) return;
+
+    const { getToken } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js");
+    const swReg = await navigator.serviceWorker.ready;
+
+    const token = await getToken(messaging, {
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: swReg
+    });
+
+    if (!token) return;
+
+    const existing = state.user?.fcmTokens || [];
+    if (!existing.includes(token)) {
+      const updatedTokens = [...new Set([...existing, token])];
+      await setDoc(
+        doc(db, "users", state.firebaseUser.uid),
+        { fcmTokens: updatedTokens },
+        { merge: true }
+      );
+      if (state.user) {
+        state.user.fcmTokens = updatedTokens;
+      }
+      console.log("FCM token auto-synced ✅");
+    }
+  } catch (err) {
+    console.warn("Silent token sync bypassed:", err.message);
+  } finally {
+    _syncingToken = false;
+  }
+}
+
 export function checkBudgetAlert(remaining, effectiveBudget) {
   if (!("Notification" in window)) return;
   if (Notification.permission !== "granted") return;
