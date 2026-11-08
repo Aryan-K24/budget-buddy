@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, setPersistence, indexedDBLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDg9uWb4nNgbn9dlnc9Or4nHVCa_S5eA0U",
@@ -8,12 +9,24 @@ const firebaseConfig = {
   projectId: "budget-buddy-e8fa5",
   storageBucket: "budget-buddy-e8fa5.firebasestorage.app",
   messagingSenderId: "770514003150",
-  appId: "1:770514003150:web:434b933a204f0dc7f11c9f"
+  appId: "1:770514003150:web:434b933a204f0dc7f11c9f",
+  measurementId: "G-R6MQ4K2N0Y"
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Initialize Firebase Analytics safely
+export let analytics = null;
+isSupported().then(supported => {
+  if (supported) {
+    analytics = getAnalytics(app);
+    console.log("Firebase Analytics initialized ✅");
+  }
+}).catch(err => {
+  console.warn("Analytics not supported:", err);
+});
 
 // indexedDB works properly on iOS PWA unlike browserLocalPersistence
 setPersistence(auth, indexedDBLocalPersistence).catch(() => {});

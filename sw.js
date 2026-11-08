@@ -1,4 +1,4 @@
-const CACHE_NAME = "budget-buddy-v17"; 
+const CACHE_NAME = "budget-buddy-v18"; 
 
 const ASSETS = [
   "/", "/index.html", "/login.html", "/register.html",
@@ -76,7 +76,9 @@ self.addEventListener("fetch", event => {
     event.request.url.includes("gstatic.com/firebasejs") ||
     event.request.url.includes("fcm.googleapis.com") ||
     event.request.url.includes("googleapis.com/mcp") ||
-    event.request.url.includes("cdnjs.cloudflare.com")
+    event.request.url.includes("cdnjs.cloudflare.com") ||
+    event.request.url.includes("google-analytics.com") ||
+    event.request.url.includes("googletagmanager.com")
   ) {
     event.respondWith(fetch(event.request));
     return;
